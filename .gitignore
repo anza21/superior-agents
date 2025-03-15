@@ -24,4 +24,64 @@ rest-api-venv
 rag-api-venv
 
 code/
-pkl/
+pkl/.env
+*.pyc
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.egg-info/
+*.egg
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.sqlite3
+
+# Virtual Environments
+venv/
+env/
+myenv/
+.env
+.envy
+.env.*
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+
+# Docker
+docker-compose.override.yml
+docker-compose.yml.bak
+docker-compose.yml~
+
+# Logs
+*.log
+logs/
+
+# Misc
+.DS_Store
+*.bak
+*.tmp
+*.cache
+*.db
+*.pid
+*.seed
+*.pid.lock
