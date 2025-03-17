@@ -24,7 +24,6 @@ rest-api-venv
 rag-api-venv
 
 code/
-pkl/.env
 *.pyc
 # Python
 __pycache__/
@@ -85,6 +84,10 @@ logs/
 *.pid
 *.seed
 *.pid.lock
+<<<<<<< HEAD
 600
 Miniconda3-latest-Linux-x86_64.sh
+=======
+pkl/
+>>>>>>> eefbdcdddd8ec505da5edd9343de27270c3ffe47
 .env
