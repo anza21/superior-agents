@@ -87,3 +87,4 @@ logs/
 *.pid.lock
 600
 Miniconda3-latest-Linux-x86_64.sh
+.env
