@@ -85,3 +85,4 @@ logs/
 *.seed
 *.pid.lock
 pkl/
+.env
