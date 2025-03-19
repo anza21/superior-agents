@@ -6,7 +6,7 @@ DB_FILE = "database.db"  # SQLite database file name
 SCHEMA = """
 -- sup_agent_sessions definition
 
-CREATE TABLE sup_agent_sessions (
+CREATE TABLE IF NOT EXISTS sup_agent_sessions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   session_id TEXT UNIQUE,
   agent_id TEXT NOT NULL,
@@ -22,11 +22,11 @@ CREATE TABLE sup_agent_sessions (
   status_cycle TEXT CHECK(status_cycle IN ('running', 'finished')) DEFAULT 'finished'
 );
 
-CREATE INDEX idx_agent_started ON sup_agent_sessions (agent_id, started_at);
+CREATE INDEX IF NOT EXISTS idx_agent_started ON sup_agent_sessions (agent_id, started_at);
 
 -- sup_agents definition
 
-CREATE TABLE sup_agents (
+CREATE TABLE IF NOT EXISTS sup_agents (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   agent_id TEXT UNIQUE,
   user_id TEXT NOT NULL,
@@ -38,11 +38,11 @@ CREATE TABLE sup_agents (
   UNIQUE(agent_id)
 );
 
-CREATE INDEX idx_user_id ON sup_agents (user_id);
+CREATE INDEX IF NOT EXISTS idx_user_id ON sup_agents (user_id);
 
 -- sup_chat_history definition
 
-CREATE TABLE sup_chat_history (
+CREATE TABLE IF NOT EXISTS sup_chat_history (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   history_id TEXT,
   session_id TEXT NOT NULL,
@@ -51,41 +51,11 @@ CREATE TABLE sup_chat_history (
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_session_time ON sup_chat_history (session_id, timestamp);
-
--- sup_notifications definition
-
-CREATE TABLE sup_notifications (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  notification_id TEXT,
-  bot_username TEXT,
-  relative_to_scraper_id TEXT,
-  source TEXT,
-  short_desc TEXT,
-  long_desc TEXT,
-  notification_date DATETIME,
-  created DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
--- sup_strategies definition
-
-CREATE TABLE sup_strategies (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  strategy_id TEXT,
-  agent_id TEXT NOT NULL,
-  summarized_desc TEXT,
-  full_desc TEXT,
-  strategy_result TEXT,
-  parameters TEXT,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX idx_agent_created ON sup_strategies (agent_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_session_time ON sup_chat_history (session_id, timestamp);
 
 -- sup_users definition
 
-CREATE TABLE sup_users (
+CREATE TABLE IF NOT EXISTS sup_users (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id TEXT,
   username TEXT NOT NULL,
@@ -97,7 +67,7 @@ CREATE TABLE sup_users (
 
 -- sup_wallet_snapshots definition
 
-CREATE TABLE sup_wallet_snapshots (
+CREATE TABLE IF NOT EXISTS sup_wallet_snapshots (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   snapshot_id TEXT,
   agent_id TEXT NOT NULL,
@@ -106,11 +76,12 @@ CREATE TABLE sup_wallet_snapshots (
   snapshot_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_agent_time ON sup_wallet_snapshots (agent_id, snapshot_time);
-INSERT INTO sup_agents (agent_id, user_id, name, configuration) 
+CREATE INDEX IF NOT EXISTS idx_agent_time ON sup_wallet_snapshots (agent_id, snapshot_time);
+
+INSERT OR IGNORE INTO sup_agents (agent_id, user_id, name, configuration)
 VALUES ('agent_007', 'user_123', 'Agent Alpha', '{"setting": "default"}');
 
-INSERT INTO sup_agents (agent_id, user_id, name, configuration) 
+INSERT OR IGNORE INTO sup_agents (agent_id, user_id, name, configuration)
 VALUES ('agent_002', 'user_456', 'Agent Beta', '{"mode": "advanced"}');
 """
 
@@ -118,7 +89,7 @@ def initialize_db():
     """Create the database and tables if they don't exist."""
     conn = sqlite3.connect(DB_FILE)  # Connect to SQLite DB (creates if not exists)
     cursor = conn.cursor()
-    
+
     cursor.executescript(SCHEMA)  # Execute schema
     conn.commit()  # Save changes
     conn.close()  # Close connection
