@@ -103,7 +103,7 @@ class MarketingSensor:
 
 	def get_count_of_followers(self) -> int:
 		try:
-			count = self.twitter_client.get_count_of_followers().unwrap()
+			count = self.twitter_client.get_count_of_followers()
 		except UnwrapError as e:
 			e = e.result.err()
 			logger.error(

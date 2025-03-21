@@ -87,7 +87,16 @@ logs/
 <<<<<<< HEAD
 600
 Miniconda3-latest-Linux-x86_64.sh
-=======
 pkl/
->>>>>>> eefbdcdddd8ec505da5edd9343de27270c3ffe47
 .env
+
+pkl/*.env
+*.env
+test_all_twitter_keys.py
+__pycache__/
+*.log
+*.sqlite
+*.db
+*.pyc
+*.key
+*.bak
