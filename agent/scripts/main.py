@@ -1,262 +1,62 @@
-from datetime import datetime
-import json
-import os
 import sys
 import time
-from functools import partial
-
 import docker
-import tweepy
-from dotenv import load_dotenv
-from duckduckgo_search import DDGS
-from loguru import logger
-from anthropic import Anthropic
-from openai import OpenAI
+from src.manager import fetch_fe_data
+from src.flows.marketing import unassisted_flow as marketing_flow
+from src.flows.trading import trading_flow
+from src.utils.container_utils import ContainerManager  # Σωστό path!
 
-from src.agent.marketing import MarketingAgent, MarketingPromptGenerator
-from src.agent.trading import TradingAgent, TradingPromptGenerator
-from src.container import ContainerManager
-from src.datatypes import StrategyData
-from src.db import APIDB
-from src.flows.marketing import unassisted_flow as marketing_unassisted_flow
-from src.flows.trading import assisted_flow as trading_assisted_flow
-from src.genner import get_genner
-from src.helper import services_to_envs, services_to_prompts
-from src.manager import ManagerClient
-from src.client.rag import RAGClient
-from src.sensor.marketing import MarketingSensor
-from src.sensor.trading import TradingSensor
-from src.summarizer import get_summarizer
-from src.twitter import TweepyTwitterClient
-from src.client.openrouter import OpenRouter
+def setup_marketing_agent_flow(fe_data, session_id, agent_id):
+    in_con_env = fe_data.get("in_con_env", False)
 
-load_dotenv()
-
-# ENV Vars
-TWITTER_API_KEY = os.getenv("TWITTER_API_KEY") or ""
-TWITTER_API_KEY_SECRET = os.getenv("TWITTER_API_KEY_SECRET") or ""
-TWITTER_BEARER_TOKEN = os.getenv("TWITTER_BEARER_TOKEN") or ""
-TWITTER_ACCESS_TOKEN = os.getenv("TWITTER_ACCESS_TOKEN") or ""
-TWITTER_ACCESS_TOKEN_SECRET = os.getenv("TWITTER_ACCESS_TOKEN_SECRET") or ""
-
-COINGECKO_API_KEY = os.getenv("COINGECKO_API_KEY") or ""
-ETHERSCAN_API_KEY = os.getenv("ETHERSCAN_API_KEY") or ""
-INFURA_PROJECT_ID = os.getenv("INFURA_PROJECT_ID") or ""
-ETHER_ADDRESS = os.getenv("ETHER_ADDRESS") or ""
-
-DEEPSEEK_OPENROUTER_API_KEY = os.getenv("DEEPSEEK_OPENROUTER_API_KEY") or ""
-DEEPSEEK_DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_DEEPSEEK_API_KEY") or ""
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY") or ""
-OAI_API_KEY = os.getenv("OAI_API_KEY") or ""
-
-MANAGER_SERVICE_URL = os.getenv("MANAGER_SERVICE_URL") or ""
-DB_SERVICE_URL = os.getenv("DB_SERVICE_URL") or ""
-TXN_SERVICE_URL = os.getenv("TXN_SERVICE_URL") or ""
-DB_SERVICE_API_KEY = os.getenv("DB_SERVICE_API_KEY") or ""
-
-deepseek_or_client = OpenRouter(base_url="https://openrouter.ai/api/v1", api_key=DEEPSEEK_OPENROUTER_API_KEY)
-deepseek_local_client = OpenAI(base_url=os.getenv("DEEPSEEK_LOCAL_SERVICE_URL") or "", api_key=os.getenv("DEEPSEEK_LOCAL_API_KEY") or "")
-deepseek_deepseek_client = OpenAI(base_url="https://api.deepseek.com", api_key=DEEPSEEK_DEEPSEEK_API_KEY)
-anthropic_client = Anthropic(api_key=ANTHROPIC_API_KEY)
-oai_client = OpenAI(api_key=OAI_API_KEY)
-summarizer_genner = get_genner("deepseek_v3_or", stream_fn=lambda x: None, or_client=deepseek_or_client)
-
-
-def setup_marketing_agent_flow(fe_data: dict, session_id: str, agent_id: str):
-    role = fe_data["role"]
-    time_ = fe_data["time"]
-    metric_name = fe_data["metric_name"]
-    notif_sources = fe_data["notifications"]
-    services_used = fe_data["research_tools"]
-
-    in_con_env = services_to_envs(services_used)
-    apis = services_to_prompts(services_used)
-    db = APIDB(base_url=DB_SERVICE_URL, api_key=DB_SERVICE_API_KEY)
-
-    container_manager = ContainerManager(docker.from_env(), "agent-executor", "./code", in_con_env=in_con_env)
-
-    auth = tweepy.OAuth1UserHandler(
-        consumer_key=TWITTER_API_KEY,
-        consumer_secret=TWITTER_API_KEY_SECRET,
-        access_token=TWITTER_ACCESS_TOKEN,
-        access_token_secret=TWITTER_ACCESS_TOKEN_SECRET
+    container_manager = ContainerManager(
+        client=docker.from_env(),
+        container_name="agent-executor",
+        code_path="./code",
+        in_con_env=in_con_env
     )
 
-    twitter_client = TweepyTwitterClient()
+    notif_sources = fe_data.get("notification_sources", ["twitter_mentions", "twitter_feed"])
+    return container_manager, notif_sources, marketing_flow
 
-    sensor = MarketingSensor(twitter_client, DDGS())
+def setup_trading_agent_flow(fe_data, session_id, agent_id):
+    in_con_env = fe_data.get("in_con_env", False)
 
-    genner = get_genner(
-        fe_data["model"],
-        deepseek_deepseek_client=deepseek_deepseek_client,
-        or_client=deepseek_or_client,
-        deepseek_local_client=deepseek_local_client,
-        anthropic_client=anthropic_client,
-        stream_fn=lambda token: print(token, end="", flush=True),
+    container_manager = ContainerManager(
+        client=docker.from_env(),
+        container_name="agent-executor",
+        code_path="./code",
+        in_con_env=in_con_env
     )
 
-    prompt_generator = MarketingPromptGenerator(fe_data["prompts"])
-    previous_strategies = []
-    print("⚠️ Skipping fetch_all_strategies due to 403 error.")
+    notif_sources = fe_data.get("notification_sources", ["coingecko"])
+    return container_manager, notif_sources, trading_flow
 
+def run_agent(agent_type, session_id, agent_id):
+    print(f"[INFO] Running {agent_type} agent for session {session_id}")
 
-    rag = RAGClient(session_id=session_id, agent_id=agent_id)
-    rag.save_result_batch(previous_strategies)
+    fe_data = fetch_fe_data(agent_id)
 
-    agent = MarketingAgent(
-        agent_id=agent_id,
-        db=db,
-        sensor=sensor,
-        genner=genner,
-        container_manager=container_manager,
-        prompt_generator=prompt_generator,
-        rag=rag,
-    )
-
-    summarizer = get_summarizer(summarizer_genner)
-
-    flow_func = partial(
-        marketing_unassisted_flow,
-        agent=agent,
-        session_id=session_id,
-        role=role,
-        time=time_,
-        apis=apis,
-        metric_name=metric_name,
-        summarizer=summarizer,
-    )
-
-    def wrapped_flow(prev_strat, notif_str):
-        return flow_func(agent=agent, prev_strat=prev_strat, notif_str=notif_str)
-
-    return agent, notif_sources, wrapped_flow
-
-
-def setup_trading_agent_flow(fe_data: dict, session_id: str, agent_id: str):
-    role = fe_data["role"]
-    network = fe_data["network"]
-    services_used = fe_data["research_tools"]
-    trading_instruments = fe_data["trading_instruments"]
-    metric_name = fe_data["metric_name"]
-    notif_sources = fe_data["notifications"]
-    time_ = fe_data["time"]
-
-    in_con_env = services_to_envs(services_used)
-    apis = services_to_prompts(services_used)
-    db = APIDB(base_url=DB_SERVICE_URL, api_key=DB_SERVICE_API_KEY)
-
-    if fe_data["model"] == "deepseek":
-        fe_data["model"] = "deepseek_or"
-
-    genner = get_genner(
-        fe_data["model"],
-        deepseek_deepseek_client=deepseek_deepseek_client,
-        or_client=deepseek_or_client,
-        deepseek_local_client=deepseek_local_client,
-        anthropic_client=anthropic_client,
-        stream_fn=lambda token: print(token, end="", flush=True),
-    )
-
-    prompt_generator = TradingPromptGenerator(prompts=fe_data["prompts"])
-    sensor = TradingSensor(ETHER_ADDRESS, INFURA_PROJECT_ID, ETHERSCAN_API_KEY)
-    container_manager = ContainerManager(docker.from_env(), "agent-executor", "./code", in_con_env=in_con_env)
-    summarizer = get_summarizer(summarizer_genner)
-
-    previous_strategies = db.fetch_all_strategies(agent_id)
-
-    rag = RAGClient(session_id=session_id, agent_id=agent_id)
-    rag.save_result_batch(previous_strategies)
-
-    agent = TradingAgent(
-        agent_id=agent_id,
-        sensor=sensor,
-        genner=genner,
-        container_manager=container_manager,
-        prompt_generator=prompt_generator,
-        db=db,
-        rag=rag,
-    )
-
-    flow_func = partial(
-        trading_assisted_flow,
-        agent=agent,
-        session_id=session_id,
-        role=role,
-        network=network,
-        time=time_,
-        apis=apis,
-        trading_instruments=trading_instruments,
-        metric_name=metric_name,
-        txn_service_url=TXN_SERVICE_URL,
-        summarizer=summarizer,
-    )
-
-    def wrapped_flow(prev_strat, notif_str):
-        return flow_func(agent=agent, prev_strat=prev_strat, notif_str=notif_str)
-
-    return agent, notif_sources, wrapped_flow
-
-
-def run_agent(agent_type: str, session_id: str, agent_id: str):
-    db = APIDB(base_url=DB_SERVICE_URL, api_key=DB_SERVICE_API_KEY)
-
-    try:
-        session = db.create_agent_session(session_id, agent_id, datetime.now().isoformat(), "running")
-    except Exception as e:
-        logger.error(f"Error creating agent session: {e}")
-
-    session = db.get_agent_session(session_id, agent_id)
-
-    if session is not None:
-        session_interval = session.get("data", {}).get("session_interval", 15)
-        db.update_agent_session(session_id, agent_id, "running")
+    if agent_type == "marketing":
+        container_manager, notif_sources, flow = setup_marketing_agent_flow(fe_data, session_id, agent_id)
+    elif agent_type == "trading":
+        container_manager, notif_sources, flow = setup_trading_agent_flow(fe_data, session_id, agent_id)
     else:
-        print("❌ Session is None — failed to load session from DB.")
-        session_interval = 15
-        db.create_agent_session(session_id, agent_id, datetime.now().isoformat(), "running")
-
-    manager_client = ManagerClient(MANAGER_SERVICE_URL, session_id)
-    fe_data = manager_client.fetch_fe_data(agent_type)
-    db.update_agent_session(session_id, agent_id, "running", json.dumps(fe_data))
-    logger.info(f"Running {agent_type} agent for session {session_id}")
-
-    if agent_type == "trading":
-        agent, notif_sources, flow = setup_trading_agent_flow(fe_data, session_id, agent_id)
-    elif agent_type == "marketing":
-        agent, notif_sources, flow = setup_marketing_agent_flow(fe_data, session_id, agent_id)
-    else:
-        logger.error(f"Unknown agent type: {agent_type}")
+        print("[ERROR] Invalid agent type. Use 'marketing' or 'trading'.")
         sys.exit(1)
 
-    flow(None, None)
-    logger.info(f"Waiting for {session_interval} seconds before starting a new cycle...")
-    time.sleep(session_interval)
-
     while True:
-        db.add_cycle_count(session_id, agent_id)
-        session = agent.db.get_agent_session(session_id, agent_id)
-        if session and session.get("data", {}).get("status") == "stopping":
-            agent.db.update_agent_session(session_id, agent_id, "stopped")
-            sys.exit()
+        try:
+            flow(session_id=session_id, agent_id=agent_id, fe_data=fe_data,
+                 container_manager=container_manager, notification_sources=notif_sources)
+        except Exception as e:
+            print(f"[ERROR] Agent execution failed: {str(e)}")
 
-        prev_strat = agent.db.fetch_latest_strategy(agent.agent_id)
-        assert prev_strat is not None
-        logger.info(f"Previous strat is {prev_strat}")
-
-        current_notif = agent.db.fetch_latest_notification_str_v2(notif_sources, 5)
-        logger.info(f"Latest notification is {current_notif}")
-
-        agent.rag.save_result_batch([prev_strat])
-        logger.info("Added the previous strat onto the RAG manager")
-
-        flow(prev_strat, current_notif)
-
-        logger.info(f"Waiting for {session_interval} seconds before starting a new cycle...")
-        time.sleep(session_interval)
-
+        print(f"[INFO] Waiting for 900 seconds before starting a new cycle...")
+        time.sleep(900)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 4:
+    if len(sys.argv) != 4:
         print("Usage: python main.py [marketing|trading] [session_id] [agent_id]")
         sys.exit(1)
 
@@ -265,3 +65,4 @@ if __name__ == "__main__":
     agent_id = sys.argv[3]
 
     run_agent(agent_type, session_id, agent_id)
+
