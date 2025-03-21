@@ -68,6 +68,26 @@ class ManagerClient:
 
             fe_data["prompts"].update(default_prompts)
 
-        logger.info(f"Final prompts: \n{pformat(fe_data["prompts"], 1)}")
+        logger.info(f"Final prompts: \n{pformat(fe_data['prompts'], 1)}")
 
         return fe_data
+
+
+# ✅ Διόρθωση: Εξάγουμε τη fetch_fe_data για να μπορούμε να την κάνουμε import σωστά
+def fetch_fe_data(agent_type: str):
+    """
+    Wrapper function που δημιουργεί ένα instance του ManagerClient
+    και καλεί τη fetch_fe_data.
+
+    Args:
+        agent_type (str): "trading" ή "marketing"
+
+    Returns:
+        dict: Τα frontend data που χρειάζεται ο agent
+    """
+    client = ManagerClient(base_url="http://localhost:8000", session_id="default_session")
+    return client.fetch_fe_data(agent_type)
+
+
+# ✅ Επιτρέπουμε την εξαγωγή της fetch_fe_data
+__all__ = ["fetch_fe_data"]
