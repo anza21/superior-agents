@@ -10,7 +10,7 @@ from src.db import APIDB
 from src.genner.Base import Genner
 from src.client.rag import RAGClient
 from src.sensor.trading import TradingSensor
-from src.types import ChatHistory, Message
+from src.custom_types import ChatHistory, Message
 
 
 class TradingPromptGenerator:

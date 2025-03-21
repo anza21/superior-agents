@@ -7,7 +7,7 @@ from result import Err, Ok, Result
 
 from src.config import ClaudeConfig
 from src.helper import extract_content
-from src.types import ChatHistory
+from src.custom_types import ChatHistory
 
 from .Base import Genner
 

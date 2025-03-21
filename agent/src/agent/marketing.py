@@ -10,7 +10,7 @@ from src.container import ContainerManager
 from src.db import APIDB
 from src.genner.Base import Genner
 from src.sensor.marketing import MarketingSensor
-from src.types            import ChatHistory, Message
+from src.custom_types            import ChatHistory, Message
 
 
 class MarketingPromptGenerator:
