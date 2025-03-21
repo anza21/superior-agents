@@ -464,13 +464,13 @@ class APIDB:
     def add_cycle_count(self, session_id: str, agent_id: str) -> bool:
         """
         Increment the cycle count for an agent session.
-        
+
         This method retrieves the current cycle count for a session and increments it by one.
-        
+
         Args:
             session_id (str): The ID of the session
             agent_id (str): The ID of the agent
-            
+
         Returns:
             bool: True if the cycle count was successfully incremented, False otherwise
         """
@@ -479,20 +479,40 @@ class APIDB:
             {"session_id": session_id, "agent_id": agent_id},
             Dict[str, Any],
         )
-        session = response.data["data"][0]
 
-        if not session["cycle_count"]:
-            session["cycle_count"] = 0
+        if not response.success:
+            print(f"[ERROR] Failed to fetch session: {response.error}")
+            return False
+
+        data = response.data.get("data", [])
+        if not data:
+            print(f"[WARNING] No session data found for session_id={session_id}, agent_id={agent_id}. Skipping cycle count update.")
+            return False
+
+        session = data[0]
+
+        current_cycle = session.get("cycle_count", 0)
+        try:
+            new_cycle = int(current_cycle) + 1
+        except Exception as e:
+            print(f"[ERROR] Invalid cycle count value: {current_cycle}. Error: {str(e)}")
+            return False
 
         response = self._make_request(
             "agent_sessions/update",
             {
                 "session_id": session_id,
                 "agent_id": agent_id,
-                "cycle_count": str(session["cycle_count"] + 1),
+                "cycle_count": str(new_cycle),
             },
             Dict[str, Any],
         )
+
+        if response.success:
+            print(f"[INFO] Updated cycle count to {new_cycle} for session {session_id}")
+        else:
+            print(f"[ERROR] Failed to update cycle count: {response.error}")
+
         return response.success
 
     def create_agent_session(
