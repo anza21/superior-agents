@@ -489,8 +489,8 @@ class MarketingAgent:
             )
         )
 
-        gen_result = self.genner.ch_completion(self.chat_history + ctx_ch)
-
+        gen_result = self.genner.ch_completion((self.chat_history + ctx_ch).messages)
+        print("✅ GEN RESULT:", gen_result)
        # if err := gen_result.err():
           # return Err# return Err(f"MarketingAgent.gen_research_code_on_first, err: \n{err}")
 
@@ -538,10 +538,15 @@ class MarketingAgent:
             )
         )
 
-        gen_result = self.genner.ch_completion(self.chat_history + ctx_ch)
+        gen_result = self.genner.ch_completion((self.chat_history + ctx_ch).messages)
 
-        if err := gen_result.err():
-            return Err(f"MarketingAgent.gen_research_code, err: \n{err}")
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"MarketingAgent.gen_research_code: unexpected result format: {gen_result}")
+
 
         response = gen_result[0]
         ctx_ch = ctx_ch.append(Message(role="assistant", content=response))
@@ -584,7 +589,7 @@ class MarketingAgent:
             )
         )
 
-        gen_result = self.genner.ch_completion(self.chat_history + ctx_ch)
+        gen_result = self.genner.ch_completion((self.chat_history + ctx_ch).messages)
 
 
         response, _ = gen_result

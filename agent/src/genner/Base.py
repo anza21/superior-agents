@@ -238,7 +238,7 @@ class OllamaGenner(Genner):
                 Err(str): Error message if generation failed
         """
         try:
-            completion_result = self.ch_completion(messages)
+            completion_result = self.ch_completion(messages.messages)
 
             if err := completion_result.err():
                 return Err(
@@ -284,7 +284,7 @@ class OllamaGenner(Genner):
                 Err(str): Error message if generation failed
         """
         try:
-            completion_result = self.ch_completion(messages)
+            completion_result = self.ch_completion(messages.messages)
 
             if err := completion_result.err():
                 return Err(

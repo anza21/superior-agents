@@ -928,13 +928,21 @@ class TradingAgent:
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"TradingAgent.gen_research_code_on_first, err: \n{err}")
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.gen_research_code_on_first: unexpected result format: {gen_result}")
 
-        processed_codes, raw_response = gen_result.unwrap()
-        ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
 
-        return Ok((processed_codes[0], ctx_ch))
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.<function>: unexpected result format: {gen_result}")
+
 
     def gen_research_code(
         self,
@@ -979,13 +987,13 @@ class TradingAgent:
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"TradingAgent.gen_research_code, err: \n{err}")
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.gen_research_code: unexpected result format: {gen_result}")
 
-        processed_codes, raw_response = gen_result.unwrap()
-        ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
-
-        return Ok((processed_codes[0], ctx_ch))
 
     def gen_strategy(
         self,
@@ -1019,10 +1027,15 @@ class TradingAgent:
             )
         )
 
-        gen_result = self.genner.ch_completion(self.chat_history + ctx_ch)
+        gen_result = self.genner.ch_completion((self.chat_history + ctx_ch).messages)
 
-        if err := gen_result.err():
-            return Err(f"TradingAgent.gen_strategy, err: \n{err}")
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.gen_strategy: unexpected result format: {gen_result}")
+
 
         response = gen_result.unwrap()
         ctx_ch = ctx_ch.append(Message(role="assistant", content=response))
@@ -1051,13 +1064,12 @@ class TradingAgent:
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"TradingAgent.gen_account_research_code, err: \n{err}")
-
-        processed_codes, raw_response = gen_result.unwrap()
-        ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
-
-        return Ok((processed_codes[0], ctx_ch))
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.gen_account_research_code: unexpected result format: {gen_result}")
 
     def gen_trading_code(
         self,
@@ -1105,13 +1117,13 @@ class TradingAgent:
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"TradingAgent.gen_trading_code, err: \n{err}")
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.gen_trading_code: unexpected result format: {gen_result}")
 
-        processed_codes, raw_response = gen_result.unwrap()
-        ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
-
-        return Ok((processed_codes[0], ctx_ch))
 
     def gen_trading_non_address_code(
         self,
@@ -1156,13 +1168,12 @@ class TradingAgent:
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"TradingAgent.gen_trading_non_address_code, err: \n{err}")
-
-        processed_codes, raw_response = gen_result.unwrap()
-        ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
-
-        return Ok((processed_codes[0], ctx_ch))
+        if isinstance(gen_result, tuple):
+            response, token_type = gen_result
+            ctx_ch.append(Message(role="assistant", content=response))
+            return Ok((response, ctx_ch))
+        else:
+            return Err(f"TradingAgent.gen_trading_non_address_code: unexpected result format: {gen_result}")
 
     def gen_better_code(
         self, prev_code: str, errors: str

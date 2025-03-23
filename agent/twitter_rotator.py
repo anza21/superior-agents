@@ -31,5 +31,6 @@ class TwitterRotator:
     def get_next(self) -> Dict:
         """Επιστρέφει την επόμενη διαμόρφωση από τη λίστα."""
         config = self.configs[self.current_index]
+        print(f"[ROTATOR] Using Twitter config #{self.current_index + 1}")
         self.current_index = (self.current_index + 1) % len(self.configs)  # Κυκλική περιστροφή
         return config

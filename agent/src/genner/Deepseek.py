@@ -1,7 +1,7 @@
 from typing import List, Optional, Tuple
 from loguru import logger
 
-from src.agent.schema import Message, TokenType
+from src.agent.schema import Message, TokenType, ChatHistory
 from src.genner.Base import Genner
 
 
@@ -18,6 +18,9 @@ class DeepseekGenner(Genner):
     def ch_completion(
         self, messages: List[Message], functions: Optional[List[dict]] = None
     ) -> Tuple[str, TokenType]:
+        if isinstance(messages, ChatHistory):
+            messages = messages.messages
+
         stream_ = None
         try:
             stream_ = self._stream_response(messages, functions)
@@ -25,6 +28,7 @@ class DeepseekGenner(Genner):
             for token, token_type in stream_:
                 result += token
             return result, TokenType.GENERATED
+
         except Exception as e:
             logger.exception(
                 f"DeepseekGenner.ch_completion: Unexpected error: {e}"

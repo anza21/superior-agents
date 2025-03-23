@@ -1,3 +1,4 @@
+import tweepy
 import dataclasses
 from datetime import datetime
 import json
@@ -200,23 +201,33 @@ def setup_marketing_agent_flow(
         in_con_env=in_con_env
     )
     
-    auth = tweepy.OAuth1UserHandler(
-        consumer_key=TWITTER_API_KEY,
-        consumer_secret=TWITTER_API_KEY_SECRET,
-        access_token=TWITTER_ACCESS_TOKEN, 
-        access_token_secret=TWITTER_ACCESS_TOKEN_SECRET
+    from twitter_rotator import TwitterRotator
+    import tweepy
+    from twitter import TweepyTwitterClient
+
+    rotator = TwitterRotator()
+    twitter_config = rotator.get_next()
+
+    client = tweepy.Client(
+        bearer_token=twitter_config["headers"]["Authorization"].split()[-1],
+        consumer_key=twitter_config["headers"]["API-Key"],
+        consumer_secret=twitter_config["headers"]["API-Secret"],
+        access_token=twitter_config["auth"]["access_token"],
+        access_token_secret=twitter_config["auth"]["access_token_secret"],
+        wait_on_rate_limit=True
     )
 
-    twitter_client = TweepyTwitterClient(
-        client=tweepy.Client(
-            consumer_key=TWITTER_API_KEY,
-            consumer_secret=TWITTER_API_KEY_SECRET,
-            access_token=TWITTER_ACCESS_TOKEN,
-            access_token_secret=TWITTER_ACCESS_TOKEN_SECRET,
-            wait_on_rate_limit=True  # Add rate limit handling
-        ),
-        api_client=tweepy.API(auth),
+    api_client = tweepy.API(
+        auth=tweepy.OAuth1UserHandler(
+            twitter_config["headers"]["API-Key"],
+            twitter_config["headers"]["API-Secret"],
+            twitter_config["auth"]["access_token"],
+            twitter_config["auth"]["access_token_secret"],
+        )
     )
+
+    twitter_client = TweepyTwitterClient(client=client, api_client=api_client)
+
 
     sensor = MarketingSensor(twitter_client, DDGS())
 
