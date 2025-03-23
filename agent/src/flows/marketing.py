@@ -147,7 +147,7 @@ def unassisted_flow(
                 research_output_str=research_code_output,
                 metric_name=metric_name,
                 time=time,
-            ).unwrap()
+            )
 
             logger.info(f"Response: {new_ch.get_latest_response()}")
             # Temporarily avoid new chat to reduce cost

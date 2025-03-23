@@ -7,7 +7,7 @@ from result import Err, Ok, Result
 from src.config import (
     OllamaConfig,
 )
-from src.types import ChatHistory
+from src.agent_types import ChatHistory
 
 
 class Genner(ABC):

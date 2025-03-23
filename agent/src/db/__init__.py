@@ -8,7 +8,7 @@ from enum import Enum
 from datetime import datetime, timedelta
 
 from src.datatypes import StrategyData, StrategyInsertData
-from src.types import ChatHistory
+from src.agent_types import ChatHistory
 from src.helper import get_latest_notifications_by_source
 
 T = TypeVar("T")

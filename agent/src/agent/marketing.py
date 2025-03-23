@@ -10,7 +10,7 @@ from src.container import ContainerManager
 from src.db import APIDB
 from src.genner.Base import Genner
 from src.sensor.marketing import MarketingSensor
-from src.types            import ChatHistory, Message
+from src.agent_types            import ChatHistory, Message
 
 
 class MarketingPromptGenerator:
@@ -491,11 +491,12 @@ class MarketingAgent:
 
         gen_result = self.genner.ch_completion(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"MarketingAgent.gen_research_code_on_first, err: \n{err}")
+       # if err := gen_result.err():
+          # return Err# return Err(f"MarketingAgent.gen_research_code_on_first, err: \n{err}")
 
-        response = gen_result.unwrap()
-        ctx_ch = ctx_ch.append(Message(role="assistant", content=response))
+        response, _ = gen_result
+        ctx_ch.append(Message(role="assistant", content=response))
+
 
         return Ok((response, ctx_ch))
 
@@ -542,18 +543,19 @@ class MarketingAgent:
         if err := gen_result.err():
             return Err(f"MarketingAgent.gen_research_code, err: \n{err}")
 
-        response = gen_result.unwrap()
+        response = gen_result[0]
         ctx_ch = ctx_ch.append(Message(role="assistant", content=response))
 
         return Ok((response, ctx_ch))
 
     def gen_strategy(
-        self,
-        notifications_str: str,
-        research_output_str: str,
-        metric_name: str,
-        time: str
-    ) -> Result[Tuple[str, ChatHistory], str]:
+    self,
+    notifications_str: str,
+    research_output_str: str,
+    metric_name: str,
+    time: str
+) -> Tuple[str, ChatHistory]:
+
         """
         Generate a marketing strategy.
         
@@ -584,13 +586,11 @@ class MarketingAgent:
 
         gen_result = self.genner.ch_completion(self.chat_history + ctx_ch)
 
-        if err := gen_result.err():
-            return Err(f"MarketingAgent.gen_strategy, err: \n{err}")
 
-        response = gen_result.unwrap()
+        response, _ = gen_result
         ctx_ch = ctx_ch.append(Message(role="assistant", content=response))
 
-        return Ok((response, ctx_ch))
+        return response, ctx_ch
 
     def gen_marketing_code(
         self,
@@ -622,11 +622,11 @@ class MarketingAgent:
         )
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
+        marketing_code, _ = gen_result
+       # if err := gen_result.err():
+           # return Err(f"MarketingAgent.gen_marketing_code, err: \n{err}")
 
-        if err := gen_result.err():
-            return Err(f"MarketingAgent.gen_marketing_code, err: \n{err}")
-
-        processed_codes, raw_response = gen_result.unwrap()
+        processed_codes, raw_response = gen_result
         ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
 
         return Ok((processed_codes[0], ctx_ch))
@@ -656,11 +656,11 @@ class MarketingAgent:
         )
 
         gen_result = self.genner.generate_code(self.chat_history + ctx_ch)
+        marketing_code, _ = gen_result
+       # if err := gen_result.err():
+           # return Err(f"MarketingAgent.gen_better_code, err: \n{err}")
 
-        if err := gen_result.err():
-            return Err(f"MarketingAgent.gen_better_code, err: \n{err}")
-
-        processed_codes, raw_response = gen_result.unwrap()
+        processed_codes, raw_response = gen_result
         ctx_ch = ctx_ch.append(Message(role="assistant", content=raw_response))
 
         return Ok((processed_codes[0], ctx_ch))

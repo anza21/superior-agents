@@ -2,7 +2,7 @@ from functools import partial
 from typing import Callable, List, Optional
 
 from src.genner.Base import Genner
-from src.types import ChatHistory, Message
+from src.agent_types import ChatHistory, Message
 
 
 def summarize(
@@ -55,7 +55,7 @@ def summarize(
     # Attempt generation with retries
     for attempt in range(max_retries):
         try:
-            response = genner.ch_completion(chat_history).unwrap()
+            response, _ = genner.ch_completion(chat_history.messages)
             if response and isinstance(response, str):
                 return response.strip()
         except Exception as e:

@@ -25,3 +25,5 @@ rag-api-venv
 
 code/
 pkl/
+*.db
+*.log
