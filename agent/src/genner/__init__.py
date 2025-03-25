@@ -1,7 +1,7 @@
 from typing import Callable
 
 from anthropic import Anthropic
-from openai import OpenAI
+import openai
 
 from src.client.openrouter import OpenRouter
 from src.config import (
@@ -45,9 +45,9 @@ available_backends = [
 
 def get_genner(
     backend: str,
-    stream_fn: Callable[[str], None] | None,
-    deepseek_deepseek_client: OpenAI | None = None,
-    deepseek_local_client: OpenAI | None = None,
+    stream_fn: Callable[[str], None] | None = None,  # ✅ Προστέθηκε το `= None`
+    deepseek_deepseek_client = None,  # ✅ Σωστή αρχικοποίηση με κόμμα
+    deepseek_local_client = None,  # ✅ Αφαιρέσαμε το `OpenAI | None`
     anthropic_client: Anthropic | None = None,
     or_client: OpenRouter | None = None,
     deepseek_config: DeepseekConfig = DeepseekConfig(),
@@ -55,6 +55,7 @@ def get_genner(
     openai_config: OpenRouterConfig = OpenRouterConfig(),
     gemini_config: OpenRouterConfig = OpenRouterConfig(),
 ) -> Genner:
+
     """
     Get a genner instance based on the backend.
 

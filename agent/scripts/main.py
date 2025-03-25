@@ -14,7 +14,7 @@ from anthropic import Anthropic
 from dotenv import load_dotenv
 from duckduckgo_search import DDGS
 from loguru import logger
-from openai import OpenAI
+import openai
 
 import docker
 from src.agent.marketing import MarketingAgent, MarketingPromptGenerator
@@ -85,20 +85,21 @@ deepseek_or_client = OpenRouter(
     api_key=DEEPSEEK_OPENROUTER_API_KEY,
     include_reasoning=True,
 )
-deepseek_local_client = OpenAI(
-    base_url=DEEPSEEK_LOCAL_SERVICE_URL, api_key=DEEPSEEK_LOCAL_API_KEY
-)
-deepseek_deepseek_client = OpenAI(
-    base_url="https://api.deepseek.com", api_key=DEEPSEEK_DEEPSEEK_API_KEY
-)
+
+# OpenAI δεν έχει πλέον `OpenAI()` στην `0.28.0`
+openai.api_key = DEEPSEEK_LOCAL_API_KEY  # ✅ Ρύθμιση API Key
+deepseek_local_client = openai  # ✅ Αντιστοίχιση OpenAI module
+
+deepseek_deepseek_client = openai  # ✅ Αντί για OpenAI(), χρησιμοποιούμε το module
+
 anthropic_client = Anthropic(api_key=ANTHROPIC_API_KEY)
-oai_client = OpenAI(api_key=OAI_API_KEY)
+oai_client = openai  # ✅ Χρησιμοποιούμε το module για όλες τις OpenAI κλήσεις
+
 summarizer_genner = get_genner(
     "deepseek_v3_or", stream_fn=lambda x: None, or_client=deepseek_or_client
 )
 
 DEFAULT_HEADERS = {"x-api-key": DB_SERVICE_API_KEY, "Content-Type": "application/json"}
-
 
 def setup_trading_agent_flow(
     fe_data: dict, session_id: str, agent_id: str, assisted=True

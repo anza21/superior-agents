@@ -3,7 +3,7 @@ from typing import Callable, List, Tuple
 
 import yaml
 from result import Err, Ok, Result
-from openai import OpenAI
+import openai
 
 from src.client.openrouter import OpenRouter
 from src.config import ClaudeConfig, OpenRouterConfig

@@ -18,22 +18,33 @@ class DeepseekGenner(Genner):
     def ch_completion(
         self, messages: List[Message], functions: Optional[List[dict]] = None
     ) -> Tuple[str, TokenType]:
-        if isinstance(messages, ChatHistory):
-            messages = messages.messages
 
-        stream_ = None
+        # ✅ Αν είναι string, σημαίνει ότι κάτι πήγε στραβά πριν από εδώ!
+        if isinstance(messages, str):
+            logger.error(f"[Deepseek] ❌ ERROR: Received string instead of list! messages={messages}")
+            return "error", TokenType.GENERATED
+
+        # ✅ Αν είναι ChatHistory, το μετατρέπουμε σε λίστα από dictionaries
+        if isinstance(messages, ChatHistory):
+            messages = [{"role": msg.role, "content": msg.content} for msg in messages.messages]
+
+        # ✅ Αν δεν είναι λίστα, κάνουμε έναν ακόμα έλεγχο
+        if not isinstance(messages, list):
+            logger.error(f"[Deepseek] ❌ ERROR: Invalid type for messages: {type(messages)}")
+            return "error", TokenType.GENERATED
+
+        logger.info("[Deepseek] ✅ Sending request with correct format...")
+
+        # ✅ Επεξεργασία απάντησης από το AI
         try:
-            stream_ = self._stream_response(messages, functions)
-            result = ""
-            for token, token_type in stream_:
-                result += token
-            return result, TokenType.GENERATED
+            response = self._stream_response(messages, functions)
+            full_response = "".join([token for token, _ in response])  # Συνένωση των tokens
+            return full_response, TokenType.GENERATED
 
         except Exception as e:
-            logger.exception(
-                f"DeepseekGenner.ch_completion: Unexpected error: {e}"
-            )
-            return "print('error')", TokenType.GENERATED
+            logger.error(f"[Deepseek] ❌ ERROR: Exception while generating response: {e}")
+            return "error", TokenType.GENERATED
+
 
     def _stream_response(self, messages, functions):
         return self.client.create_chat_completion_stream(

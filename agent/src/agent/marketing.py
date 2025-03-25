@@ -1,3 +1,5 @@
+from typing import Generator
+from loguru import logger
 from datetime import datetime
 import re
 from textwrap import dedent
@@ -489,12 +491,62 @@ class MarketingAgent:
             )
         )
 
-        gen_result = self.genner.ch_completion((self.chat_history + ctx_ch).messages)
+        # Εξασφαλίζουμε ότι το messages έχει τη σωστή μορφή
+        if isinstance(self.chat_history, ChatHistory):
+            chat_messages = [{"role": msg.role, "content": msg.content} for msg in self.chat_history.messages]
+        else:
+            chat_messages = self.chat_history  # Αν δεν είναι ChatHistory, το αφήνουμε ως έχει
+
+        if isinstance(ctx_ch, ChatHistory):
+            ctx_ch_messages = [{"role": msg.role, "content": msg.content} for msg in ctx_ch.messages]
+        else:
+            ctx_ch_messages = ctx_ch  # Αν δεν είναι ChatHistory, το αφήνουμε ως έχει
+
+        # Ενοποίηση των δύο λιστών μηνυμάτων
+        full_messages = chat_messages + ctx_ch_messages  
+
+        logger.info(f"🔍 DEBUG: Type of full_messages: {type(full_messages)}")
+        logger.info(f"🔍 DEBUG: full_messages content: {full_messages}")
+
+        if isinstance(full_messages, str):
+            logger.error("❌ ERROR: full_messages είναι string, μετατρέπω σε λίστα!")
+            full_messages = [{"role": "user", "content": full_messages}]
+
+        gen_result = self.genner.ch_completion(full_messages)
+
+
+        # ✅ Αν το αποτέλεσμα είναι generator, το μετατρέπουμε σε string
+        if isinstance(gen_result, Generator):
+            gen_result = "".join(token[0] if isinstance(token, tuple) else token for token in gen_result)
+
+
+        print("✅ GEN RESULT:", gen_result)
+
+        if isinstance(gen_result, str):
+            response = gen_result
+        elif isinstance(gen_result, tuple) and len(gen_result) == 2:
+            response, _ = gen_result
+        elif isinstance(gen_result, Generator):
+            response = "".join(token[0] if isinstance(token, tuple) else token for token in gen_result)
+        else:
+            logger.error(f"❌ ERROR: gen_result returned unexpected format: {gen_result}")
+            return "error"
+
+
+        ctx_ch.append(Message(role="assistant", content=response))
+        return Ok((response, ctx_ch))
+
+
         print("✅ GEN RESULT:", gen_result)
        # if err := gen_result.err():
           # return Err# return Err(f"MarketingAgent.gen_research_code_on_first, err: \n{err}")
 
-        response, _ = gen_result
+        if isinstance(gen_result, tuple) and len(gen_result) == 2:
+            response, _ = gen_result
+        else:
+            logger.error(f"❌ ERROR: gen_result returned unexpected format: {gen_result}")
+            return "error"
+
         ctx_ch.append(Message(role="assistant", content=response))
 
 
