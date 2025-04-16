@@ -24,4 +24,4 @@ rest-api-venv
 rag-api-venv
 
 code/
-pkl/
+pkl/rest-api/database.db
