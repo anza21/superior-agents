@@ -412,7 +412,7 @@ def starter_prompt():
         stream_fn=lambda token: print(token, end="", flush=True),
     )
     # modify this if you want to run this forever
-    for x in range(3):
+    while True:
         if answers['agent_type'] == 'marketing':
             start_marketing_agent(
                 agent_type=answers['agent_type'], 
@@ -436,7 +436,7 @@ def starter_prompt():
                 sensor=sensor,
                 txn_service_url=os.getenv('TXN_SERVICE_URL')
             )
-        session_interval = 15
+        session_interval = 600
         logger.info(f"Waiting for {session_interval} seconds before starting a new cycle...")
         time.sleep(session_interval)
 
