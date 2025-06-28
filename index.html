@@ -2,20 +2,153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suggesto AI</title>
+  <title>SuggestoAI – Autonomous Affiliate Agent</title>
   <link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
   <nav>
-    <a href="/">EN</a> |
-    <a href="/gr/">GR</a> |
-    <a href="/es/">ES</a> |
-    <a href="/fr/">FR</a>
+    <button id="lang-en" class="lang-btn">EN</button> |
+    <button id="lang-gr" class="lang-btn">GR</button>
+    <a href="about.html" style="margin-left:2rem;">About / Legal</a>
   </nav>
   <main>
-    <h1>Welcome to Suggesto AI</h1>
-    <p>Platform for creating AI agents and auto-publishing content. Perfect for affiliate marketers.</p>
+    <!-- HERO SECTION -->
+    <section id="hero-en">
+      <h1>Autonomous Affiliate Product Promoter Agent</h1>
+      <p>Empowering creators & marketers with a fully automated, end-to-end affiliate marketing funnel. Zero manual effort. 100% open-source tools.</p>
+      <button class="cta-btn">Get Early Access</button>
+      <img src="https://undraw.co/api/illustrations/undraw_online_ad_re_ol62.svg" alt="AI Affiliate Agent" style="width:220px;margin:2rem auto;display:block;">
+    </section>
+    <section id="hero-gr" style="display:none">
+      <h1>Αυτόνομος Affiliate Agent Προώθησης Προϊόντων</h1>
+      <p>Ενδυναμώνουμε δημιουργούς & marketers με πλήρως αυτοματοποιημένο affiliate marketing funnel. Μηδενική χειροκίνητη εργασία. 100% εργαλεία ανοιχτού κώδικα.</p>
+      <button class="cta-btn">Ζήτα Πρόσβαση</button>
+      <img src="https://undraw.co/api/illustrations/undraw_online_ad_re_ol62.svg" alt="AI Affiliate Agent" style="width:220px;margin:2rem auto;display:block;">
+    </section>
+    <!-- VISION SECTION -->
+    <section id="vision-en">
+      <h2>Vision</h2>
+      <p>We build an autonomous multi-agent system that runs the entire affiliate marketing funnel – from product discovery to publishing – with zero manual effort. Our mission: automate time-consuming workflows and deliver real value to end users through trustworthy product content.</p>
+    </section>
+    <section id="vision-gr" style="display:none">
+      <h2>Όραμα</h2>
+      <p>Δημιουργούμε ένα αυτόνομο σύστημα πολλαπλών agents που διαχειρίζεται όλο το affiliate marketing funnel – από την ανακάλυψη προϊόντων έως τη δημοσίευση – χωρίς καμία χειροκίνητη παρέμβαση. Αποστολή μας: αυτοματοποίηση χρονοβόρων διαδικασιών και παροχή αξιόπιστου περιεχομένου προϊόντων.</p>
+    </section>
+    <!-- FEATURES SECTION -->
+    <section id="features-en">
+      <h2>Features</h2>
+      <div class="features">
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?search,ai" alt="Product Discovery">
+          <h3>Product Discovery</h3>
+          <p>Scans affiliate networks (Amazon, AliExpress, eBay) for trending products via API.</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?content,writing" alt="Content Generation">
+          <h3>Content Generation</h3>
+          <p>Creates SEO blog posts, comparison tables, Q&A, and more using LLMs & RAG.</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?publish,web" alt="Omnichannel Publishing">
+          <h3>Omnichannel Publishing</h3>
+          <p>Publishes to blogs & social media (Blogger, Medium, Facebook, Instagram, X, LinkedIn).</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?video,ai" alt="Video Content Creation">
+          <h3>Video Content Creation</h3>
+          <p>Generates YouTube scripts, TTS narration, and short-form videos automatically.</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?trust,security" alt="Value Features">
+          <h3>Value Features</h3>
+          <p>Shows guarantees, return policies, seller trust, and answers product questions.</p>
+        </div>
+      </div>
+    </section>
+    <section id="features-gr" style="display:none">
+      <h2>Δυνατότητες</h2>
+      <div class="features">
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?search,ai" alt="Ανακάλυψη Προϊόντων">
+          <h3>Ανακάλυψη Προϊόντων</h3>
+          <p>Σαρώνει affiliate δίκτυα (Amazon, AliExpress, eBay) για trending προϊόντα μέσω API.</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?content,writing" alt="Δημιουργία Περιεχομένου">
+          <h3>Δημιουργία Περιεχομένου</h3>
+          <p>Γράφει SEO blog posts, πίνακες σύγκρισης, Q&A και άλλα με LLMs & RAG.</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?publish,web" alt="Omnichannel Publishing">
+          <h3>Omnichannel Publishing</h3>
+          <p>Δημοσιεύει σε blogs & social media (Blogger, Medium, Facebook, Instagram, X, LinkedIn).</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?video,ai" alt="Δημιουργία Βίντεο">
+          <h3>Δημιουργία Βίντεο</h3>
+          <p>Γράφει σενάρια YouTube, αφηγείται με TTS και δημιουργεί short-form videos αυτόματα.</p>
+        </div>
+        <div class="feature">
+          <img src="https://source.unsplash.com/80x80/?trust,security" alt="Value Features">
+          <h3>Value Features</h3>
+          <p>Εμφανίζει εγγυήσεις, πολιτικές επιστροφών, αξιοπιστία πωλητή και απαντά σε ερωτήσεις προϊόντων.</p>
+        </div>
+      </div>
+    </section>
+    <!-- TECH STACK SECTION -->
+    <section id="tech-en">
+      <h2>Tech Stack</h2>
+      <ul>
+        <li>Python</li>
+        <li>Superior Agent framework</li>
+        <li>OpenRouter API LLMs</li>
+        <li>RAG (ChromaDB)</li>
+        <li>Blogging & Social Media APIs</li>
+        <li>YouTube Data API</li>
+        <li>Coqui / Google TTS</li>
+        <li>MoviePy, ffmpeg</li>
+      </ul>
+    </section>
+    <section id="tech-gr" style="display:none">
+      <h2>Τεχνολογίες</h2>
+      <ul>
+        <li>Python</li>
+        <li>Superior Agent framework</li>
+        <li>OpenRouter API LLMs</li>
+        <li>RAG (ChromaDB)</li>
+        <li>APIs Blogging & Social Media</li>
+        <li>YouTube Data API</li>
+        <li>Coqui / Google TTS</li>
+        <li>MoviePy, ffmpeg</li>
+      </ul>
+    </section>
+    <!-- CALL FOR COLLABORATION SECTION -->
+    <section id="collab-en">
+      <h2>Call for Collaboration</h2>
+      <p>Looking for: multi-agent orchestration mentors, API integration templates (Medium, YouTube, Meta), and guidance on video + TTS. Join the journey!</p>
+    </section>
+    <section id="collab-gr" style="display:none">
+      <h2>Ανοιχτό Κάλεσμα για Συνεργασία</h2>
+      <p>Αναζητούμε: μέντορες για multi-agent orchestration, templates για API integration (Medium, YouTube, Meta) και καθοδήγηση σε video + TTS. Έλα στην ομάδα!</p>
+    </section>
   </main>
+  <footer>
+    <p>Owner: Antonios Zacharas (Ζαχαράς Αντώνιος) | Address: Zosimadon 5, 13451 Kamatero | Phone: +30 694 224 0161 | Email: contact@suggestoai.com | Website: https://suggestoai.com | © SuggestoAI 2025</p>
+  </footer>
+  <script>
+    // Language toggle logic
+    function showLang(lang) {
+      const ids = ['hero', 'vision', 'features', 'tech', 'collab'];
+      ids.forEach(function(id) {
+        document.getElementById(id+'-en').style.display = (lang==='en') ? 'block' : 'none';
+        document.getElementById(id+'-gr').style.display = (lang==='gr') ? 'block' : 'none';
+      });
+    }
+    document.getElementById('lang-en').onclick = function() { showLang('en'); };
+    document.getElementById('lang-gr').onclick = function() { showLang('gr'); };
+    // Default: English
+    showLang('en');
+  </script>
 </body>
 </html><!-- Greek: /gr/index.html --><!DOCTYPE html><html lang="el">
 <head>
