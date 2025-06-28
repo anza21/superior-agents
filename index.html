@@ -2,209 +2,102 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SuggestoAI – Autonomous Affiliate Agent</title>
+  <title>SuggestoAI – Smart AI Product Recommender</title>
   <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav>
-    <button id="lang-en" class="lang-btn">EN</button> |
-    <button id="lang-gr" class="lang-btn">GR</button>
-    <a href="about.html" style="margin-left:2rem;">About / Legal</a>
+    <a href="index.html">Home</a> |
+    <a href="ai-recommends.html">AI Recommends</a> |
+    <a href="for-brands.html">For Brands</a> |
+    <a href="about.html">About / Legal</a>
+    <span style="float:right">
+      <button id="lang-en" class="lang-btn">EN</button>
+      <button id="lang-gr" class="lang-btn">GR</button>
+      <button id="lang-es" class="lang-btn">ES</button>
+      <button id="lang-fr" class="lang-btn">FR</button>
+      <button id="lang-it" class="lang-btn">IT</button>
+      <button id="lang-de" class="lang-btn">DE</button>
+    </span>
   </nav>
   <main>
     <!-- HERO SECTION -->
     <section id="hero-en">
-      <h1>Autonomous Affiliate Product Promoter Agent</h1>
-      <p>Empowering creators & marketers with a fully automated, end-to-end affiliate marketing funnel. Zero manual effort. 100% open-source tools.</p>
-      <button class="cta-btn">Get Early Access</button>
-      <img src="https://undraw.co/api/illustrations/undraw_online_ad_re_ol62.svg" alt="AI Affiliate Agent" style="width:220px;margin:2rem auto;display:block;">
+      <img src="logo-hero.jpg" alt="SuggestoAI Logo" style="width:320px;max-width:90%;margin:2rem auto 1rem auto;display:block;border-radius:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+      <h1>Discover the Best Products, Effortlessly</h1>
+      <p>SuggestoAI is your smart AI agent that finds, compares, and recommends top affiliate products from Amazon, AliExpress, and more. Save time, shop smarter, and trust every suggestion!</p>
+      <button class="cta-btn">See AI Recommendations</button>
     </section>
     <section id="hero-gr" style="display:none">
-      <h1>Αυτόνομος Affiliate Agent Προώθησης Προϊόντων</h1>
-      <p>Ενδυναμώνουμε δημιουργούς & marketers με πλήρως αυτοματοποιημένο affiliate marketing funnel. Μηδενική χειροκίνητη εργασία. 100% εργαλεία ανοιχτού κώδικα.</p>
-      <button class="cta-btn">Ζήτα Πρόσβαση</button>
-      <img src="https://undraw.co/api/illustrations/undraw_online_ad_re_ol62.svg" alt="AI Affiliate Agent" style="width:220px;margin:2rem auto;display:block;">
+      <img src="logo-hero.jpg" alt="SuggestoAI Logo" style="width:320px;max-width:90%;margin:2rem auto 1rem auto;display:block;border-radius:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+      <h1>Ανακάλυψε τα Καλύτερα Προϊόντα, Αυτόματα</h1>
+      <p>Το SuggestoAI είναι ο έξυπνος AI agent που βρίσκει, συγκρίνει και προτείνει κορυφαία affiliate προϊόντα από Amazon, AliExpress και άλλα. Εξοικονόμησε χρόνο, αγόρασε έξυπνα, εμπιστεύσου κάθε πρόταση!</p>
+      <button class="cta-btn">Δες τις AI Προτάσεις</button>
     </section>
-    <!-- VISION SECTION -->
-    <section id="vision-en">
-      <h2>Vision</h2>
-      <p>We build an autonomous multi-agent system that runs the entire affiliate marketing funnel – from product discovery to publishing – with zero manual effort. Our mission: automate time-consuming workflows and deliver real value to end users through trustworthy product content.</p>
-    </section>
-    <section id="vision-gr" style="display:none">
-      <h2>Όραμα</h2>
-      <p>Δημιουργούμε ένα αυτόνομο σύστημα πολλαπλών agents που διαχειρίζεται όλο το affiliate marketing funnel – από την ανακάλυψη προϊόντων έως τη δημοσίευση – χωρίς καμία χειροκίνητη παρέμβαση. Αποστολή μας: αυτοματοποίηση χρονοβόρων διαδικασιών και παροχή αξιόπιστου περιεχομένου προϊόντων.</p>
-    </section>
-    <!-- FEATURES SECTION -->
-    <section id="features-en">
-      <h2>Features</h2>
-      <div class="features">
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?search,ai" alt="Product Discovery">
-          <h3>Product Discovery</h3>
-          <p>Scans affiliate networks (Amazon, AliExpress, eBay) for trending products via API.</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?content,writing" alt="Content Generation">
-          <h3>Content Generation</h3>
-          <p>Creates SEO blog posts, comparison tables, Q&A, and more using LLMs & RAG.</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?publish,web" alt="Omnichannel Publishing">
-          <h3>Omnichannel Publishing</h3>
-          <p>Publishes to blogs & social media (Blogger, Medium, Facebook, Instagram, X, LinkedIn).</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?video,ai" alt="Video Content Creation">
-          <h3>Video Content Creation</h3>
-          <p>Generates YouTube scripts, TTS narration, and short-form videos automatically.</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?trust,security" alt="Value Features">
-          <h3>Value Features</h3>
-          <p>Shows guarantees, return policies, seller trust, and answers product questions.</p>
-        </div>
-      </div>
-    </section>
-    <section id="features-gr" style="display:none">
-      <h2>Δυνατότητες</h2>
-      <div class="features">
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?search,ai" alt="Ανακάλυψη Προϊόντων">
-          <h3>Ανακάλυψη Προϊόντων</h3>
-          <p>Σαρώνει affiliate δίκτυα (Amazon, AliExpress, eBay) για trending προϊόντα μέσω API.</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?content,writing" alt="Δημιουργία Περιεχομένου">
-          <h3>Δημιουργία Περιεχομένου</h3>
-          <p>Γράφει SEO blog posts, πίνακες σύγκρισης, Q&A και άλλα με LLMs & RAG.</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?publish,web" alt="Omnichannel Publishing">
-          <h3>Omnichannel Publishing</h3>
-          <p>Δημοσιεύει σε blogs & social media (Blogger, Medium, Facebook, Instagram, X, LinkedIn).</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?video,ai" alt="Δημιουργία Βίντεο">
-          <h3>Δημιουργία Βίντεο</h3>
-          <p>Γράφει σενάρια YouTube, αφηγείται με TTS και δημιουργεί short-form videos αυτόματα.</p>
-        </div>
-        <div class="feature">
-          <img src="https://source.unsplash.com/80x80/?trust,security" alt="Value Features">
-          <h3>Value Features</h3>
-          <p>Εμφανίζει εγγυήσεις, πολιτικές επιστροφών, αξιοπιστία πωλητή και απαντά σε ερωτήσεις προϊόντων.</p>
-        </div>
-      </div>
-    </section>
-    <!-- TECH STACK SECTION -->
-    <section id="tech-en">
-      <h2>Tech Stack</h2>
+    <!-- Placeholders for more languages -->
+    <section id="hero-es" style="display:none"><h1>¡Muy pronto en español!</h1></section>
+    <section id="hero-fr" style="display:none"><h1>Bientôt disponible en français !</h1></section>
+    <section id="hero-it" style="display:none"><h1>Presto disponibile in italiano!</h1></section>
+    <section id="hero-de" style="display:none"><h1>Bald auch auf Deutsch!</h1></section>
+    <!-- BENEFITS SECTION -->
+    <section id="benefits-en">
+      <h2>Why SuggestoAI?</h2>
       <ul>
-        <li>Python</li>
-        <li>Superior Agent framework</li>
-        <li>OpenRouter API LLMs</li>
-        <li>RAG (ChromaDB)</li>
-        <li>Blogging & Social Media APIs</li>
-        <li>YouTube Data API</li>
-        <li>Coqui / Google TTS</li>
-        <li>MoviePy, ffmpeg</li>
+        <li>✅ Finds trending, quality products automatically</li>
+        <li>✅ Compares and reviews with trustworthy insights</li>
+        <li>✅ Saves you time and effort</li>
+        <li>✅ Publishes content across platforms</li>
       </ul>
     </section>
-    <section id="tech-gr" style="display:none">
-      <h2>Τεχνολογίες</h2>
+    <section id="benefits-gr" style="display:none">
+      <h2>Γιατί SuggestoAI;</h2>
       <ul>
-        <li>Python</li>
-        <li>Superior Agent framework</li>
-        <li>OpenRouter API LLMs</li>
-        <li>RAG (ChromaDB)</li>
-        <li>APIs Blogging & Social Media</li>
-        <li>YouTube Data API</li>
-        <li>Coqui / Google TTS</li>
-        <li>MoviePy, ffmpeg</li>
+        <li>✅ Βρίσκει αυτόματα δημοφιλή, ποιοτικά προϊόντα</li>
+        <li>✅ Συγκρίνει και αξιολογεί με αξιόπιστες πληροφορίες</li>
+        <li>✅ Εξοικονομεί χρόνο και προσπάθεια</li>
+        <li>✅ Δημοσιεύει περιεχόμενο σε πολλές πλατφόρμες</li>
       </ul>
     </section>
-    <!-- CALL FOR COLLABORATION SECTION -->
-    <section id="collab-en">
-      <h2>Call for Collaboration</h2>
-      <p>Looking for: multi-agent orchestration mentors, API integration templates (Medium, YouTube, Meta), and guidance on video + TTS. Join the journey!</p>
+    <!-- Placeholders for more languages -->
+    <section id="benefits-es" style="display:none"></section>
+    <section id="benefits-fr" style="display:none"></section>
+    <section id="benefits-it" style="display:none"></section>
+    <section id="benefits-de" style="display:none"></section>
+    <!-- CTA -->
+    <section id="cta-en">
+      <button class="cta-btn" onclick="window.location='ai-recommends.html'">See AI Recommendations</button>
     </section>
-    <section id="collab-gr" style="display:none">
-      <h2>Ανοιχτό Κάλεσμα για Συνεργασία</h2>
-      <p>Αναζητούμε: μέντορες για multi-agent orchestration, templates για API integration (Medium, YouTube, Meta) και καθοδήγηση σε video + TTS. Έλα στην ομάδα!</p>
+    <section id="cta-gr" style="display:none">
+      <button class="cta-btn" onclick="window.location='ai-recommends.html'">Δες τις AI Προτάσεις</button>
     </section>
+    <!-- Placeholders for more languages -->
+    <section id="cta-es" style="display:none"></section>
+    <section id="cta-fr" style="display:none"></section>
+    <section id="cta-it" style="display:none"></section>
+    <section id="cta-de" style="display:none"></section>
   </main>
   <footer>
-    <p>Owner: Antonios Zacharas (Ζαχαράς Αντώνιος) | Address: Zosimadon 5, 13451 Kamatero | Phone: +30 694 224 0161 | Email: contact@suggestoai.com | Website: https://suggestoai.com | © SuggestoAI 2025</p>
+    <p>SuggestoAI &copy; 2025 | contact@suggestoai.com</p>
   </footer>
   <script>
     // Language toggle logic
+    const langs = ['en','gr','es','fr','it','de'];
     function showLang(lang) {
-      const ids = ['hero', 'vision', 'features', 'tech', 'collab'];
-      ids.forEach(function(id) {
-        document.getElementById(id+'-en').style.display = (lang==='en') ? 'block' : 'none';
-        document.getElementById(id+'-gr').style.display = (lang==='gr') ? 'block' : 'none';
+      ['hero','benefits','cta'].forEach(function(section) {
+        langs.forEach(function(l) {
+          const el = document.getElementById(section+'-'+l);
+          if (el) el.style.display = (l===lang) ? 'block' : 'none';
+        });
       });
     }
-    document.getElementById('lang-en').onclick = function() { showLang('en'); };
-    document.getElementById('lang-gr').onclick = function() { showLang('gr'); };
+    langs.forEach(function(l) {
+      const btn = document.getElementById('lang-'+l);
+      if (btn) btn.onclick = function() { showLang(l); };
+    });
     // Default: English
     showLang('en');
   </script>
-</body>
-</html><!-- Greek: /gr/index.html --><!DOCTYPE html><html lang="el">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suggesto AI</title>
-  <link rel="stylesheet" href="/assets/style.css" />
-</head>
-<body>
-  <nav>
-    <a href="/">EN</a> |
-    <a href="/gr/">GR</a> |
-    <a href="/es/">ES</a> |
-    <a href="/fr/">FR</a>
-  </nav>
-  <main>
-    <h1>Καλώς ήρθατε στο Suggesto AI</h1>
-    <p>Πλατφόρμα δημιουργίας AI agents και αυτόματης δημοσίευσης περιεχομένου. Ιδανική για affiliate marketers.</p>
-  </main>
-</body>
-</html><!-- Spanish: /es/index.html --><!DOCTYPE html><html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suggesto AI</title>
-  <link rel="stylesheet" href="/assets/style.css" />
-</head>
-<body>
-  <nav>
-    <a href="/">EN</a> |
-    <a href="/gr/">GR</a> |
-    <a href="/es/">ES</a> |
-    <a href="/fr/">FR</a>
-  </nav>
-  <main>
-    <h1>Bienvenido a Suggesto AI</h1>
-    <p>Plataforma para crear agentes de IA y publicar contenido automáticamente. Ideal para marketing de afiliación.</p>
-  </main>
-</body>
-</html><!-- French: /fr/index.html --><!DOCTYPE html><html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Suggesto AI</title>
-  <link rel="stylesheet" href="/assets/style.css" />
-</head>
-<body>
-  <nav>
-    <a href="/">EN</a> |
-    <a href="/gr/">GR</a> |
-    <a href="/es/">ES</a> |
-    <a href="/fr/">FR</a>
-  </nav>
-  <main>
-    <h1>Bienvenue chez Suggesto AI</h1>
-    <p>Plateforme de création d'agents IA et de publication automatique de contenu. Idéal pour le marketing d'affiliation.</p>
-  </main>
 </body>
 </html>
