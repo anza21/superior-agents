@@ -3,7 +3,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SuggestoAI – Smart AI Product Recommender</title>
-  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/png" href="favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -24,60 +24,48 @@
     </span>
   </nav>
   <main>
-    <!-- HERO SECTION -->
-    <section id="hero-en">
-      <img src="logo-hero.jpg" alt="SuggestoAI Logo" style="width:320px;max-width:90%;margin:2rem auto 1rem auto;display:block;border-radius:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+    <section id="hero-en" class="hero">
+      <img src="logo-hero.jpg" alt="SuggestoAI Logo" class="hero-logo">
       <h1>Discover the Best Products, Effortlessly</h1>
       <p>SuggestoAI is your smart AI agent that finds, compares, and recommends top affiliate products from Amazon, AliExpress, and more. Save time, shop smarter, and trust every suggestion!</p>
-      <button class="cta-btn">See AI Recommendations</button>
-    </section>
-    <section id="hero-gr" style="display:none">
-      <img src="logo-hero.jpg" alt="SuggestoAI Logo" style="width:320px;max-width:90%;margin:2rem auto 1rem auto;display:block;border-radius:1.5rem;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
-      <h1>Ανακάλυψε τα Καλύτερα Προϊόντα, Αυτόματα</h1>
-      <p>Το SuggestoAI είναι ο έξυπνος AI agent που βρίσκει, συγκρίνει και προτείνει κορυφαία affiliate προϊόντα από Amazon, AliExpress και άλλα. Εξοικονόμησε χρόνο, αγόρασε έξυπνα, εμπιστεύσου κάθε πρόταση!</p>
-      <button class="cta-btn">Δες τις AI Προτάσεις</button>
-    </section>
-    <!-- Placeholders for more languages -->
-    <section id="hero-es" style="display:none"><h1>¡Muy pronto en español!</h1></section>
-    <section id="hero-fr" style="display:none"><h1>Bientôt disponible en français !</h1></section>
-    <section id="hero-it" style="display:none"><h1>Presto disponibile in italiano!</h1></section>
-    <section id="hero-de" style="display:none"><h1>Bald auch auf Deutsch!</h1></section>
-    <!-- BENEFITS SECTION -->
-    <section id="benefits-en">
-      <h2>Why SuggestoAI?</h2>
-      <ul>
-        <li>✅ Finds trending, quality products automatically</li>
-        <li>✅ Compares and reviews with trustworthy insights</li>
-        <li>✅ Saves you time and effort</li>
-        <li>✅ Publishes content across platforms</li>
-      </ul>
-    </section>
-    <section id="benefits-gr" style="display:none">
-      <h2>Γιατί SuggestoAI;</h2>
-      <ul>
-        <li>✅ Βρίσκει αυτόματα δημοφιλή, ποιοτικά προϊόντα</li>
-        <li>✅ Συγκρίνει και αξιολογεί με αξιόπιστες πληροφορίες</li>
-        <li>✅ Εξοικονομεί χρόνο και προσπάθεια</li>
-        <li>✅ Δημοσιεύει περιεχόμενο σε πολλές πλατφόρμες</li>
-      </ul>
-    </section>
-    <!-- Placeholders for more languages -->
-    <section id="benefits-es" style="display:none"></section>
-    <section id="benefits-fr" style="display:none"></section>
-    <section id="benefits-it" style="display:none"></section>
-    <section id="benefits-de" style="display:none"></section>
-    <!-- CTA -->
-    <section id="cta-en">
       <button class="cta-btn" onclick="window.location='ai-recommends.html'">See AI Recommendations</button>
     </section>
-    <section id="cta-gr" style="display:none">
+    <section id="hero-gr" class="hero" style="display:none">
+      <img src="logo-hero.jpg" alt="SuggestoAI Logo" class="hero-logo">
+      <h1>Ανακάλυψε τα Καλύτερα Προϊόντα, Αυτόματα</h1>
+      <p>Το SuggestoAI είναι ο έξυπνος AI agent που βρίσκει, συγκρίνει και προτείνει κορυφαία affiliate προϊόντα από Amazon, AliExpress και άλλα. Εξοικονόμησε χρόνο, αγόρασε έξυπνα, εμπιστεύσου κάθε πρόταση!</p>
       <button class="cta-btn" onclick="window.location='ai-recommends.html'">Δες τις AI Προτάσεις</button>
     </section>
-    <!-- Placeholders for more languages -->
-    <section id="cta-es" style="display:none"></section>
-    <section id="cta-fr" style="display:none"></section>
-    <section id="cta-it" style="display:none"></section>
-    <section id="cta-de" style="display:none"></section>
+    <section id="hero-es" class="hero" style="display:none"><h1>¡Muy pronto en español!</h1></section>
+    <section id="hero-fr" class="hero" style="display:none"><h1>Bientôt disponible en français !</h1></section>
+    <section id="hero-it" class="hero" style="display:none"><h1>Presto disponibile in italiano!</h1></section>
+    <section id="hero-de" class="hero" style="display:none"><h1>Bald auch auf Deutsch!</h1></section>
+    <section id="benefits-en" class="features" style="margin-top:2rem;">
+      <div class="feature" style="max-width:600px;margin:0 auto;">
+        <h2>Why SuggestoAI?</h2>
+        <ul style="text-align:left;max-width:400px;margin:0 auto;">
+          <li>✅ Finds trending, quality products automatically</li>
+          <li>✅ Compares and reviews with trustworthy insights</li>
+          <li>✅ Saves you time and effort</li>
+          <li>✅ Publishes content across platforms</li>
+        </ul>
+      </div>
+    </section>
+    <section id="benefits-gr" class="features" style="margin-top:2rem;display:none;">
+      <div class="feature" style="max-width:600px;margin:0 auto;">
+        <h2>Γιατί SuggestoAI;</h2>
+        <ul style="text-align:left;max-width:400px;margin:0 auto;">
+          <li>✅ Βρίσκει αυτόματα δημοφιλή, ποιοτικά προϊόντα</li>
+          <li>✅ Συγκρίνει και αξιολογεί με αξιόπιστες πληροφορίες</li>
+          <li>✅ Εξοικονομεί χρόνο και προσπάθεια</li>
+          <li>✅ Δημοσιεύει περιεχόμενο σε πολλές πλατφόρμες</li>
+        </ul>
+      </div>
+    </section>
+    <section id="benefits-es" class="features" style="margin-top:2rem;display:none;"></section>
+    <section id="benefits-fr" class="features" style="margin-top:2rem;display:none;"></section>
+    <section id="benefits-it" class="features" style="margin-top:2rem;display:none;"></section>
+    <section id="benefits-de" class="features" style="margin-top:2rem;display:none;"></section>
   </main>
   <footer>
     <p>
@@ -89,7 +77,7 @@
     // Language toggle logic
     const langs = ['en','gr','es','fr','it','de'];
     function showLang(lang) {
-      ['hero','benefits','cta'].forEach(function(section) {
+      ['hero','benefits'].forEach(function(section) {
         langs.forEach(function(l) {
           const el = document.getElementById(section+'-'+l);
           if (el) el.style.display = (l===lang) ? 'block' : 'none';
