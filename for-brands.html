@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>For Brands – SuggestoAI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a> |
+    <button id="lang-en" class="lang-btn">EN</button> |
+    <button id="lang-gr" class="lang-btn">GR</button>
+    <a href="about.html" style="margin-left:2rem;">About / Legal</a>
+  </nav>
+  <main>
+    <section id="brands-en">
+      <h1>Partner With SuggestoAI</h1>
+      <p>We're looking for brands that share our commitment to quality and consumer trust.<br>
+      <strong>SuggestoAI only recommends products that meet high standards for value, reliability, and transparency.</strong></p>
+      <p>If your products deliver real benefits and you care about customer satisfaction, let's work together!</p>
+      <form style="max-width:400px;margin:2rem auto 0 auto;display:flex;flex-direction:column;gap:1rem;">
+        <input type="text" placeholder="Your Name / Brand" required>
+        <input type="email" placeholder="Your Email" required>
+        <textarea placeholder="Tell us about your products or partnership idea..." rows="4" required></textarea>
+        <button class="cta-btn" type="submit">Contact Us</button>
+      </form>
+    </section>
+    <section id="brands-gr" style="display:none">
+      <h1>Συνεργασία με το SuggestoAI</h1>
+      <p>Συνεργαζόμαστε μόνο με brands που δίνουν έμφαση στην ποιότητα και την εμπιστοσύνη του καταναλωτή.<br>
+      <strong>Ο SuggestoAI προτείνει προϊόντα που πληρούν υψηλά standards αξιοπιστίας, διαφάνειας και πραγματικής αξίας.</strong></p>
+      <p>Αν το brand σας μοιράζεται τις ίδιες αξίες και προσφέρει πραγματικά οφέλη στον καταναλωτή, επικοινωνήστε μαζί μας!</p>
+      <form style="max-width:400px;margin:2rem auto 0 auto;display:flex;flex-direction:column;gap:1rem;">
+        <input type="text" placeholder="Όνομα / Brand" required>
+        <input type="email" placeholder="Email" required>
+        <textarea placeholder="Περιγράψτε τα προϊόντα σας ή την ιδέα συνεργασίας..." rows="4" required></textarea>
+        <button class="cta-btn" type="submit">Επικοινωνήστε μαζί μας</button>
+      </form>
+    </section>
+  </main>
+  <footer>
+    <p>SuggestoAI &copy; 2025 | contact@suggestoai.com</p>
+  </footer>
+  <script>
+    document.getElementById('lang-en').onclick = function() {
+      document.getElementById('brands-en').style.display = 'block';
+      document.getElementById('brands-gr').style.display = 'none';
+    };
+    document.getElementById('lang-gr').onclick = function() {
+      document.getElementById('brands-en').style.display = 'none';
+      document.getElementById('brands-gr').style.display = 'block';
+    };
+    // Default: English
+    document.getElementById('brands-en').style.display = 'block';
+    document.getElementById('brands-gr').style.display = 'none';
+  </script>
+</body>
+</html> 

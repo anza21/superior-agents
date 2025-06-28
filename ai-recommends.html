@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Product Recommendations – SuggestoAI</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="ai-recommends.html">AI Recommends</a> |
+    <a href="for-brands.html">For Brands</a> |
+    <a href="about.html">About / Legal</a>
+    <span style="float:right">
+      <button id="lang-en" class="lang-btn">EN</button>
+      <button id="lang-gr" class="lang-btn">GR</button>
+      <button id="lang-es" class="lang-btn">ES</button>
+      <button id="lang-fr" class="lang-btn">FR</button>
+      <button id="lang-it" class="lang-btn">IT</button>
+      <button id="lang-de" class="lang-btn">DE</button>
+    </span>
+  </nav>
+  <main>
+    <section id="recs-en">
+      <h1>AI Product Recommendations</h1>
+      <div class="features" style="flex-wrap:wrap;gap:2rem;">
+        <div class="feature" style="max-width:320px;">
+          <img src="https://source.unsplash.com/320x180/?headphones,tech" alt="Product 1">
+          <h3>Best Wireless Headphones 2025</h3>
+          <p>Our AI agent compared 10+ models and recommends these for sound quality, comfort, and value.</p>
+          <a href="#" class="cta-btn" style="font-size:1rem;">Read More</a>
+        </div>
+        <div class="feature" style="max-width:320px;">
+          <img src="https://source.unsplash.com/320x180/?laptop,tech" alt="Product 2">
+          <h3>Top Laptops for Creators</h3>
+          <p>SuggestoAI analyzes specs, reviews, and price to help you choose the best laptop for your needs.</p>
+          <a href="#" class="cta-btn" style="font-size:1rem;">Read More</a>
+        </div>
+        <div class="feature" style="max-width:320px;">
+          <img src="https://source.unsplash.com/320x180/?smartwatch,tech" alt="Product 3">
+          <h3>Smartwatch Showdown</h3>
+          <p>See our AI-powered comparison of the latest smartwatches for fitness, style, and battery life.</p>
+          <a href="#" class="cta-btn" style="font-size:1rem;">Read More</a>
+        </div>
+      </div>
+    </section>
+    <section id="recs-gr" style="display:none">
+      <h1>AI Προτάσεις Προϊόντων</h1>
+      <div class="features" style="flex-wrap:wrap;gap:2rem;">
+        <div class="feature" style="max-width:320px;">
+          <img src="https://source.unsplash.com/320x180/?headphones,tech" alt="Προϊόν 1">
+          <h3>Καλύτερα Ασύρματα Ακουστικά 2025</h3>
+          <p>Ο agent μας συνέκρινε 10+ μοντέλα και προτείνει αυτά για ποιότητα ήχου, άνεση και αξία.</p>
+          <a href="#" class="cta-btn" style="font-size:1rem;">Διάβασε Περισσότερα</a>
+        </div>
+        <div class="feature" style="max-width:320px;">
+          <img src="https://source.unsplash.com/320x180/?laptop,tech" alt="Προϊόν 2">
+          <h3>Κορυφαία Laptops για Δημιουργούς</h3>
+          <p>Το SuggestoAI αναλύει χαρακτηριστικά, κριτικές και τιμές για να σε βοηθήσει να διαλέξεις το καλύτερο laptop.</p>
+          <a href="#" class="cta-btn" style="font-size:1rem;">Διάβασε Περισσότερα</a>
+        </div>
+        <div class="feature" style="max-width:320px;">
+          <img src="https://source.unsplash.com/320x180/?smartwatch,tech" alt="Προϊόν 3">
+          <h3>Σύγκριση Smartwatch</h3>
+          <p>Δες τη σύγκριση του agent για τα τελευταία smartwatches σε fitness, στυλ και αυτονομία.</p>
+          <a href="#" class="cta-btn" style="font-size:1rem;">Διάβασε Περισσότερα</a>
+        </div>
+      </div>
+    </section>
+    <!-- Placeholders for more languages -->
+    <section id="recs-es" style="display:none"><h1>¡Muy pronto en español!</h1></section>
+    <section id="recs-fr" style="display:none"><h1>Bientôt disponible en français !</h1></section>
+    <section id="recs-it" style="display:none"><h1>Presto disponibile in italiano!</h1></section>
+    <section id="recs-de" style="display:none"><h1>Bald auch auf Deutsch!</h1></section>
+  </main>
+  <footer>
+    <p>SuggestoAI &copy; 2025 | contact@suggestoai.com</p>
+  </footer>
+  <script>
+    // Language toggle logic
+    const langs = ['en','gr','es','fr','it','de'];
+    langs.forEach(function(l) {
+      const btn = document.getElementById('lang-'+l);
+      if (btn) btn.onclick = function() {
+        langs.forEach(function(l2) {
+          const el = document.getElementById('recs-'+l2);
+          if (el) el.style.display = (l2===l) ? 'block' : 'none';
+        });
+      };
+    });
+    // Default: English
+    document.getElementById('recs-en').style.display = 'block';
+  </script>
+</body>
+</html> 

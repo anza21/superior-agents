@@ -5,12 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About / Legal - SuggestoAI</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav>
     <a href="index.html">Home</a> |
-    <button id="lang-en" class="lang-btn">EN</button> |
-    <button id="lang-gr" class="lang-btn">GR</button>
+    <a href="ai-recommends.html">AI Recommends</a> |
+    <a href="for-brands.html">For Brands</a> |
+    <a href="about.html">About / Legal</a>
+    <span style="float:right">
+      <button id="lang-en" class="lang-btn">EN</button>
+      <button id="lang-gr" class="lang-btn">GR</button>
+      <button id="lang-es" class="lang-btn">ES</button>
+      <button id="lang-fr" class="lang-btn">FR</button>
+      <button id="lang-it" class="lang-btn">IT</button>
+      <button id="lang-de" class="lang-btn">DE</button>
+    </span>
   </nav>
   <main>
     <section id="about-en">
@@ -22,7 +33,7 @@
       <p><strong>Email:</strong> contact@suggestoai.com</p>
       <p><strong>Website:</strong> https://suggestoai.com</p>
       <h3>Vision</h3>
-      <p>SuggestoAI is committed to empowering creators and marketers by automating the affiliate marketing funnel end-to-end, using only free or open-source tools. Our mission is to deliver real value through trustworthy, autonomous product content.</p>
+      <p>SuggestoAI helps you discover and choose the best products, effortlessly. Our mission is to save you time and offer trustworthy, AI-powered recommendations—always focused on your needs.</p>
     </section>
     <section id="about-gr" style="display:none">
       <h1>Σχετικά / Νομικά</h1>
@@ -33,21 +44,37 @@
       <p><strong>Email:</strong> contact@suggestoai.com</p>
       <p><strong>Ιστοσελίδα:</strong> https://suggestoai.com</p>
       <h3>Όραμα</h3>
-      <p>Το SuggestoAI στοχεύει να ενδυναμώσει δημιουργούς και marketers, αυτοματοποιώντας πλήρως το affiliate marketing funnel με δωρεάν ή ανοιχτού κώδικα εργαλεία. Αποστολή μας είναι η παροχή αξιόπιστου, αυτόνομου περιεχομένου προϊόντων.</p>
+      <p>Το SuggestoAI σε βοηθά να ανακαλύπτεις και να επιλέγεις τα καλύτερα προϊόντα, εύκολα και αξιόπιστα. Αποστολή μας είναι να σου εξοικονομούμε χρόνο και να σου προσφέρουμε προτάσεις με τη δύναμη της τεχνητής νοημοσύνης, πάντα με επίκεντρο τις δικές σου ανάγκες.</p>
+    </section>
+    <section id="about-es" style="display:none">
+      <h1>¡Muy pronto en español!</h1>
+    </section>
+    <section id="about-fr" style="display:none">
+      <h1>Bientôt disponible en français !</h1>
+    </section>
+    <section id="about-it" style="display:none">
+      <h1>Presto disponibile in italiano!</h1>
+    </section>
+    <section id="about-de" style="display:none">
+      <h1>Bald auch auf Deutsch!</h1>
     </section>
   </main>
   <footer>
     <p>Owner: Antonios Zacharas (Ζαχαράς Αντώνιος) | Address: Zosimadon 5, 13451 Kamatero | Phone: +30 694 224 0161 | Email: contact@suggestoai.com | Website: https://suggestoai.com | © SuggestoAI 2025</p>
   </footer>
   <script>
-    document.getElementById('lang-en').onclick = function() {
-      document.getElementById('about-en').style.display = 'block';
-      document.getElementById('about-gr').style.display = 'none';
-    };
-    document.getElementById('lang-gr').onclick = function() {
-      document.getElementById('about-en').style.display = 'none';
-      document.getElementById('about-gr').style.display = 'block';
-    };
+    const langs = ['en','gr','es','fr','it','de'];
+    langs.forEach(function(l) {
+      const btn = document.getElementById('lang-'+l);
+      if (btn) btn.onclick = function() {
+        langs.forEach(function(l2) {
+          const el = document.getElementById('about-'+l2);
+          if (el) el.style.display = (l2===l) ? 'block' : 'none';
+        });
+      };
+    });
+    // Default: English
+    document.getElementById('about-en').style.display = 'block';
   </script>
 </body>
 </html> 
