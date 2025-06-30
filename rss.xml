@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>SuggestoAI Product Recommendations</title>
+  <link>https://suggestoai.com/ai-recommends.html</link>
+  <description>Latest AI-generated product recommendations from SuggestoAI.</description>
+  <!-- Agent will auto-update with new <item> for each post -->
+</channel>
+</rss> 

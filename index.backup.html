@@ -3,52 +3,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SuggestoAI – Smart AI Product Recommender</title>
-  <meta name="description" content="SuggestoAI is your autonomous AI agent for affiliate product recommendations. Discover, compare, and shop smarter with AI-powered insights." />
-  <meta name="keywords" content="AI, affiliate, product recommendations, smart shopping, reviews, SuggestoAI" />
-  <meta name="author" content="Antonios Zacharas" />
-  <meta property="og:title" content="SuggestoAI – Smart AI Product Recommender" />
-  <meta property="og:description" content="Autonomous AI agent for affiliate product recommendations. Discover, compare, and shop smarter with AI-powered insights." />
-  <meta property="og:image" content="logo-hero.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://suggestoai.com/" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SuggestoAI – Smart AI Product Recommender" />
-  <meta name="twitter:description" content="Autonomous AI agent for affiliate product recommendations. Discover, compare, and shop smarter with AI-powered insights." />
-  <meta name="twitter:image" content="logo-hero.png" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" href="favicon.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <nav>
-    <div class="nav-left">
-      <a href="index.html"><img src="logo.png" alt="SuggestoAI Logo" class="nav-logo"></a>
-      <div class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="ai-recommends.html">AI Recommends</a>
-        <a href="for-brands.html">For Brands</a>
-        <a href="about.html">About / Legal</a>
-        <a href="privacy/index.html">Privacy</a>
-      </div>
-    </div>
-    <div class="lang-switcher">
+    <a href="index.html">Home</a> |
+    <a href="ai-recommends.html">AI Recommends</a> |
+    <a href="for-brands.html">For Brands</a> |
+    <a href="about.html">About / Legal</a> |
+    <a href="privacy/index.html">Privacy</a>
+    <span style="float:right">
       <button id="lang-en" class="lang-btn">EN</button>
       <button id="lang-gr" class="lang-btn">GR</button>
       <button id="lang-es" class="lang-btn">ES</button>
       <button id="lang-fr" class="lang-btn">FR</button>
       <button id="lang-it" class="lang-btn">IT</button>
       <button id="lang-de" class="lang-btn">DE</button>
-    </div>
+    </span>
   </nav>
   <main>
     <section id="hero-en" class="hero">
-      <img src="logo-hero.png" alt="SuggestoAI Logo" class="hero-logo">
+      <img src="logo-hero.jpg" alt="SuggestoAI Logo" class="hero-logo">
       <h1>Discover the Best Products, Effortlessly</h1>
       <p>SuggestoAI is your smart AI agent that finds, compares, and recommends top affiliate products from Amazon, AliExpress, and more. Save time, shop smarter, and trust every suggestion!</p>
       <button class="cta-btn" onclick="window.location='ai-recommends.html'">See AI Recommendations</button>
     </section>
     <section id="hero-gr" class="hero" style="display:none">
-      <img src="logo-hero.png" alt="SuggestoAI Logo" class="hero-logo">
+      <img src="logo-hero.jpg" alt="SuggestoAI Logo" class="hero-logo">
       <h1>Ανακάλυψε τα Καλύτερα Προϊόντα, Αυτόματα</h1>
       <p>Το SuggestoAI είναι ο έξυπνος AI agent που βρίσκει, συγκρίνει και προτείνει κορυφαία affiliate προϊόντα από Amazon, AliExpress και άλλα. Εξοικονόμησε χρόνο, αγόρασε έξυπνα, εμπιστεύσου κάθε πρόταση!</p>
       <button class="cta-btn" onclick="window.location='ai-recommends.html'">Δες τις AI Προτάσεις</button>
@@ -84,8 +67,8 @@
     <section id="benefits-it" class="features" style="margin-top:2rem;display:none;"></section>
     <section id="benefits-de" class="features" style="margin-top:2rem;display:none;"></section>
   </main>
-  <footer>
-    SuggestoAI © 2025 | contact@suggestoai.com | <a href="privacy/index.html">Privacy Policy</a><br>
+  <footer style="text-align: center; font-size: 13px; color: #bbb; padding: 20px; background-color: #222;">
+    SuggestoAI © 2025 | contact@suggestoai.com | <a href="privacy/index.html" style="color:#bbb;">Privacy Policy</a><br>
     This website is owned and operated by Antonios Zacharas | Kamatero, Greece
   </footer>
   <script>

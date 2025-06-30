@@ -1,3 +1,4 @@
+
 # Python-generated files
 __pycache__/
 *.py[oc]
@@ -25,3 +26,8 @@ rag-api-venv
 
 code/
 pkl/
+
+# ... existing code ...
+meta-verification-chat.md
+# ... existing code ... 
+
