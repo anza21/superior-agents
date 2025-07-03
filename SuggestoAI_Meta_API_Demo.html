@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SuggestoAI Agent – Meta API Permissions Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; color: #222; }
+        h1, h2, h3 { color: #1a237e; }
+        .section { margin-bottom: 32px; }
+        .screenshot { max-width: 400px; border: 1px solid #ccc; margin: 10px 0; }
+        pre { background: #f4f4f4; padding: 12px; border-radius: 6px; }
+        .note { color: #444; font-size: 0.98em; margin-top: 8px; }
+        .flowchart-img { max-width: 600px; display: block; margin: 20px auto; border: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>SuggestoAI Agent – Meta API Permissions Demo</h1>
+
+    <div class="section">
+        <h2>🧾 Business Verification</h2>
+        <p>
+            <strong>SuggestoAI Agent</strong> operates exclusively for the verified business:<br>
+            <b>Antonios Zacharas</b><br>
+            (verified business account on Meta Business Manager)
+        </p>
+        <p>
+            This name is registered and verified on the Meta platform, and the application is created solely to support the digital assets (Facebook Page, Instagram Business Account, Domain) owned by the same proprietor.<br>
+            <b>No services are provided to third-party clients, nor is the application permitted for use outside the pages and accounts of this specific business.</b>
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>🔐 API Permissions & Use Case</h2>
+        <ul>
+            <li><b>pages_manage_posts</b>: Publish posts to Facebook Pages</li>
+            <li><b>instagram_content_publish</b>: Publish content to Instagram Business Accounts</li>
+            <li><b>pages_read_engagement</b>: Read comments, likes, and engagement</li>
+            <li><b>pages_show_list</b>: List only business-owned pages</li>
+            <li><b>pages_manage_engagement</b> (if comment replies are enabled): Manage and reply to comments</li>
+        </ul>
+        <p>All permissions are strictly used for business-owned pages/accounts. No access or actions are possible for third-party assets.</p>
+    </div>
+
+    <div class="section">
+        <h2>🛡️ Data Security & Access Restriction</h2>
+        <ul>
+            <li>Access tokens are securely stored in environment variables.</li>
+            <li>The agent checks page/account IDs and only allows actions on business-owned assets.</li>
+            <li><b>No data is sold, transferred, or shared with third parties.</b></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🚀 Walkthrough: How a Post is Published</h2>
+        <ol>
+            <li>Receive content to publish (text, image, or video).</li>
+            <li>Check that all required API permissions are present.</li>
+            <li>Select the appropriate business-owned page/account.</li>
+            <li>Create the post in the correct format for Facebook or Instagram.</li>
+            <li>Publish via the Facebook/Instagram API.</li>
+            <li>Store the result and logs for auditing.</li>
+            <li>(Optional) Check for new comments and reply, only on business-owned pages.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>📊 Agent Flowchart</h2>
+        <img src="flowchart.png" alt="Agent Flowchart" class="flowchart-img" />
+        <div class="note">*If you need the Mermaid source, it can be provided separately.</div>
+    </div>
+
+    <div class="section">
+        <h2>🖼️ Screenshots</h2>
+        <div>
+            <img src="output.png" alt="Agent Screenshot 1" class="screenshot" />
+            <img src="output_smartwatch.png" alt="Agent Screenshot 2" class="screenshot" />
+        </div>
+        <div class="note">*Screenshots from the agent's environment (e.g., successful post, API call, or terminal output).</div>
+    </div>
+
+    <div class="section">
+        <h2>💡 Example: Python Code to Publish a Facebook Post</h2>
+        <pre><code>import requests
+
+url = "https://graph.facebook.com/v19.0/{page_id}/feed"
+payload = {"message": "Hello from SuggestoAI!", "access_token": "PAGE_ACCESS_TOKEN"}
+response = requests.post(url, data=payload)
+</code></pre>
+        <div class="note">Replace <code>{page_id}</code> and <code>PAGE_ACCESS_TOKEN</code> with your own values.</div>
+    </div>
+
+    <div class="section">
+        <h2>📜 Data Protection Statement</h2>
+        <p>
+            <b>SuggestoAI Agent does not sell, transfer, or share data with any other business or third party.</b> All data and actions are strictly limited to the pages and accounts of our own business.
+        </p>
+    </div>
+</body>
+</html> 
