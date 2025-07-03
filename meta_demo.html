@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meta API Permissions Demo – SuggestoAI</title>
+  <style>
+    body { font-family: 'Inter', Arial, sans-serif; background: #f7faff; margin: 0; }
+    .container { max-width: 600px; margin: 3rem auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 12px #e0e6ed; padding: 2rem; }
+    h1 { color: #2d7be5; }
+    #fb-btn { background: #1877f3; color: #fff; border: none; border-radius: 5px; padding: 12px 24px; font-size: 1.1rem; cursor: pointer; margin-bottom: 1.5rem; }
+    #fb-btn:disabled { background: #b0c4de; }
+    .data-block { background: #f5f7fa; border-radius: 6px; padding: 1rem; margin: 1rem 0; }
+    .error { color: #c00; }
+    .success { color: #080; }
+    pre { background: #f0f0f0; padding: 1rem; border-radius: 6px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Meta API Permissions Demo</h1>
+    <p>This demo requests the following permissions:</p>
+    <ul>
+      <li>public_profile</li>
+      <li>pages_show_list</li>
+      <li>pages_read_engagement</li>
+      <li>pages_manage_posts</li>
+      <li>pages_manage_engagement</li>
+    </ul>
+    <button id="fb-btn">Login with Facebook</button>
+    <div id="status"></div>
+    <div id="data"></div>
+  </div>
+  <script>
+    // Facebook SDK
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1238129624702824',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v19.0'
+      });
+    };
+    (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    document.getElementById('fb-btn').onclick = function() {
+      FB.login(function(response) {
+        if (response.authResponse) {
+          document.getElementById('status').innerHTML = '<span class="success">Login successful!</span>';
+          fetchPageData();
+        } else {
+          document.getElementById('status').innerHTML = '<span class="error">User cancelled login or did not fully authorize.</span>';
+        }
+      }, {scope: 'public_profile,pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement'});
+    };
+
+    function fetchPageData() {
+      FB.api('/me/accounts', function(response) {
+        if (!response || response.error) {
+          document.getElementById('data').innerHTML = '<div class="error">Error fetching pages: ' + (response && response.error && response.error.message ? response.error.message : 'Unknown error') + '</div>';
+          return;
+        }
+        if (response.data && response.data.length > 0) {
+          var page = response.data[0];
+          document.getElementById('data').innerHTML = '<div class="data-block"><b>Page Name:</b> ' + page.name + '<br><b>Page ID:</b> ' + page.id + '</div>';
+          fetchPosts(page.id, page.access_token);
+        } else {
+          document.getElementById('data').innerHTML = '<div class="error">No pages found for this user.</div>';
+        }
+      });
+    }
+
+    function fetchPosts(pageId, pageToken) {
+      FB.api('/' + pageId + '/posts?fields=message,created_time,permalink_url,insights.metric(post_engaged_users)', 'GET', { access_token: pageToken }, function(response) {
+        if (!response || response.error) {
+          document.getElementById('data').innerHTML += '<div class="error">Error fetching posts: ' + (response && response.error && response.error.message ? response.error.message : 'Unknown error') + '</div>';
+          return;
+        }
+        if (response.data && response.data.length > 0) {
+          var html = '<h3>Recent Posts & Engagement</h3>';
+          response.data.forEach(function(post) {
+            html += '<div class="data-block">';
+            html += '<b>Created:</b> ' + (post.created_time ? new Date(post.created_time).toLocaleString() : '-') + '<br>';
+            html += '<b>Message:</b> ' + (post.message ? post.message : '<i>No text</i>') + '<br>';
+            html += '<b>Permalink:</b> <a href="' + post.permalink_url + '" target="_blank">View Post</a><br>';
+            if (post.insights && post.insights.data && post.insights.data.length > 0) {
+              html += '<b>Engagement:</b> ' + post.insights.data[0].values[0].value + '<br>';
+            }
+            html += '</div>';
+          });
+          document.getElementById('data').innerHTML += html;
+        } else {
+          document.getElementById('data').innerHTML += '<div class="error">No posts found for this page.</div>';
+        }
+      });
+    }
+  </script>
+</body>
+</html> 
