@@ -77,20 +77,20 @@
     }
 
     function fetchPosts(pageId, pageToken) {
-      FB.api('/' + pageId + '/posts?fields=message,created_time,permalink_url,insights.metric(post_engaged_users)', 'GET', { access_token: pageToken }, function(response) {
+      FB.api('/' + pageId + '/posts?fields=message,created_time,permalink_url,insights.metric(post_impressions)', 'GET', { access_token: pageToken }, function(response) {
         if (!response || response.error) {
           document.getElementById('data').innerHTML += '<div class="error">Error fetching posts: ' + (response && response.error && response.error.message ? response.error.message : 'Unknown error') + '</div>';
           return;
         }
         if (response.data && response.data.length > 0) {
-          var html = '<h3>Recent Posts & Engagement</h3>';
+          var html = '<h3>Recent Posts & Impressions</h3>';
           response.data.forEach(function(post) {
             html += '<div class="data-block">';
             html += '<b>Created:</b> ' + (post.created_time ? new Date(post.created_time).toLocaleString() : '-') + '<br>';
             html += '<b>Message:</b> ' + (post.message ? post.message : '<i>No text</i>') + '<br>';
             html += '<b>Permalink:</b> <a href="' + post.permalink_url + '" target="_blank">View Post</a><br>';
             if (post.insights && post.insights.data && post.insights.data.length > 0) {
-              html += '<b>Engagement:</b> ' + post.insights.data[0].values[0].value + '<br>';
+              html += '<b>Impressions:</b> ' + post.insights.data[0].values[0].value + '<br>';
             }
             html += '</div>';
           });
