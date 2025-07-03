@@ -49,56 +49,47 @@
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
 
+    // --- HARDCODED TEST DATA FOR APP REVIEW ---
+    const TEST_PAGE_ID = '692859493908787';
+    const TEST_PAGE_TOKEN = 'EAARmEoR3X2gBPH68dyAuRSuvpEjAOHxCkmrcgHHZA387pj6IIZACqYQq2gu22QZCv8mdIvtdeGv1moLpQWZAhWHCzvUCZAv3sCxsG6fVMhSTZC7ZBCRDBIeQsahpDxkkNqSBRowj4JKFSniZASgtrg9AqipYlTfFZA4q1qCJ8AMOMdwUrDLIn2ZBVZCWcMLAwbUSrtCcTZBPmKlJgTIQgAL6V5iHv1SVYjesTbbjNTY5tcW2LIuPItYfk0ZCV';
+
     document.getElementById('fb-btn').onclick = function() {
       FB.login(function(response) {
         if (response.authResponse) {
-          document.getElementById('status').innerHTML = '<span class="success">Login successful!</span>';
-          fetchPageData();
+          document.getElementById('status').innerHTML = '<span class="success">Login successful! Using Page Access Token for API calls.</span>';
+          fetchPageInsights(TEST_PAGE_ID, TEST_PAGE_TOKEN);
         } else {
           document.getElementById('status').innerHTML = '<span class="error">User cancelled login or did not fully authorize.</span>';
         }
-      }, {scope: 'public_profile,pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement'});
+      }, {scope: 'public_profile,pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,pages_read_user_content'});
     };
 
-    function fetchPageData() {
-      FB.api('/me/accounts', function(response) {
-        if (!response || response.error) {
-          document.getElementById('data').innerHTML = '<div class="error">Error fetching pages: ' + (response && response.error && response.error.message ? response.error.message : 'Unknown error') + '</div>';
-          return;
-        }
-        if (response.data && response.data.length > 0) {
-          var page = response.data[0];
-          document.getElementById('data').innerHTML = '<div class="data-block"><b>Page Name:</b> ' + page.name + '<br><b>Page ID:</b> ' + page.id + '</div>';
-          fetchPosts(page.id, page.access_token);
-        } else {
-          document.getElementById('data').innerHTML = '<div class="error">No pages found for this user.</div>';
-        }
-      });
-    }
-
-    function fetchPosts(pageId, pageToken) {
-      FB.api('/' + pageId + '/posts?fields=message,created_time,permalink_url,insights.metric(post_impressions)', 'GET', { access_token: pageToken }, function(response) {
-        if (!response || response.error) {
-          document.getElementById('data').innerHTML += '<div class="error">Error fetching posts: ' + (response && response.error && response.error.message ? response.error.message : 'Unknown error') + '</div>';
-          return;
-        }
-        if (response.data && response.data.length > 0) {
-          var html = '<h3>Recent Posts & Impressions</h3>';
-          response.data.forEach(function(post) {
-            html += '<div class="data-block">';
-            html += '<b>Created:</b> ' + (post.created_time ? new Date(post.created_time).toLocaleString() : '-') + '<br>';
-            html += '<b>Message:</b> ' + (post.message ? post.message : '<i>No text</i>') + '<br>';
-            html += '<b>Permalink:</b> <a href="' + post.permalink_url + '" target="_blank">View Post</a><br>';
-            if (post.insights && post.insights.data && post.insights.data.length > 0) {
-              html += '<b>Impressions:</b> ' + post.insights.data[0].values[0].value + '<br>';
-            }
-            html += '</div>';
-          });
+    function fetchPageInsights(pageId, pageToken) {
+      const url = `https://graph.facebook.com/v23.0/${pageId}/insights?metric=page_post_engagements&access_token=${pageToken}`;
+      document.getElementById('data').innerHTML = '<div class="data-block">Fetching insights for Page ID: <b>' + pageId + '</b>...<br><b>Using Page Access Token</b></div>';
+      fetch(url)
+        .then(res => res.json())
+        .then(json => {
+          let html = '';
+          if (json.data && json.data.length > 0) {
+            html += '<h3>page_post_engagements</h3>';
+            json.data.forEach(metric => {
+              html += '<div class="data-block">';
+              html += '<b>Metric:</b> ' + metric.name + '<br>';
+              if (metric.values && metric.values.length > 0) {
+                html += '<b>Values:</b> ' + JSON.stringify(metric.values) + '<br>';
+              }
+              html += '</div>';
+            });
+          } else {
+            html += '<div class="error">No data returned for page_post_engagements.</div>';
+          }
+          html += '<h4>Raw JSON (debug):</h4><pre>' + JSON.stringify(json, null, 2) + '</pre>';
           document.getElementById('data').innerHTML += html;
-        } else {
-          document.getElementById('data').innerHTML += '<div class="error">No posts found for this page.</div>';
-        }
-      });
+        })
+        .catch(err => {
+          document.getElementById('data').innerHTML += '<div class="error">Error fetching insights: ' + err + '</div>';
+        });
     }
   </script>
 </body>
