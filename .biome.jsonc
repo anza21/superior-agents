@@ -1,0 +1,12 @@
+{
+    "version": 1,
+    "linter": {
+      "rules": {
+        "recommended": true
+      }
+    },
+    "formatter": {
+      "enabled": true
+    }
+  }
+  
