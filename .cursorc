@@ -1,0 +1,7 @@
+{
+  "agent": {
+    "name": "SuggestoAI_Agent",
+    "goal": "Υλοποίησε έναν αυτόνομο affiliate marketing agent, βασισμένο στις αρχές των Superior Agents.",
+    "instructions": "Διάβασε όλα τα αρχεία του φακέλου και ξεκίνα με το `product_finder.py`. Υλοποίησε AliExpress API integration, με χρήση των credentials από το .env. Αν χρειάζονται άλλα modules, πρότεινέ τα ή φτιάξ' τα."
+  }
+}
