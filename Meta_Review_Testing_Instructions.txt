@@ -1,0 +1,45 @@
+Testing Instructions for Meta App Review
+========================================
+
+Where can we find the app?
+--------------------------
+The app is available at the following URL:
+https://suggestoai.com/about.html
+
+Instructions for Accessing and Testing the App
+----------------------------------------------
+1. Visit https://suggestoai.com/about.html
+2. Scroll to the section titled "Meta API Permissions Demo".
+3. Click the link to download the HTML demo (Download Meta API Permissions Demo).
+4. Open the HTML file in your browser.
+5. Click the "Login with Facebook" button.
+6. Accept all requested permissions:
+   - public_profile
+   - pages_show_list
+   - pages_read_engagement
+   - pages_manage_posts
+   - pages_manage_engagement
+7. The demo will then fetch Facebook Page data and simulate a post using the Meta APIs.
+
+Meta APIs in Use
+----------------
+- Facebook Login
+- Pages API (read engagement, manage posts, etc.)
+- Public profile
+
+Test Credentials and Payment
+----------------------------
+- No login credentials or test codes are required. Facebook Login is used directly.
+- If needed, you may create a test user under App > Roles > Test Users and assign them to a Page.
+- No payment or gift codes required. The app is available for free testing.
+
+Geo-blocking or Geo-fencing
+---------------------------
+- There are no geo-blocking or geo-fencing restrictions. The app is accessible globally.
+
+Confirmation of Meta API Usage
+------------------------------
+- The app uses Facebook Login and the following Meta APIs: public_profile, pages_show_list, pages_read_engagement, pages_manage_posts, pages_manage_engagement.
+- No other advanced access or restricted endpoints are used.
+
+If you require further information or encounter any issues during testing, please contact us at contact@suggestoai.com. 

@@ -1,0 +1,9 @@
+flowchart TD
+    A["SuggestoAI Agent"] --> B["Receive content to publish"]
+    B --> C["Check permissions (API permissions)"]
+    C --> D["Select business-owned page/account"]
+    D --> E["Create post (text/image/video)"]
+    E --> F["Publish via Facebook/Instagram API"]
+    F --> G["Store result and logs"]
+    F --> H["Check for new comments (if enabled)"]
+    H --> I["Reply to comments (only on our pages)"] 

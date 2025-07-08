@@ -1,0 +1,6 @@
+
+[general]
+prompt_schedule = {0: 'A futuristic smartwatch spinning on a white background, product animation, high detail'}
+max_frames = 100
+width = 512
+height = 512
