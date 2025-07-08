@@ -31,3 +31,5 @@ pkl/
 meta-verification-chat.md
 # ... existing code ... 
 
+.env
+venv/
